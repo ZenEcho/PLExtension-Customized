@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="popup_title">上传程序</title>
+  <link rel="stylesheet" href="vendor/dropzone/css/dropzone.css">
+  <link rel="stylesheet" href="css/popup.css">
+  <link rel="stylesheet" href="css/public.css">
+  <link rel="shortcut icon" href="icons/logo256.png" type="image/x-icon">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-icons.css">
+  <script defer src="vendor/jquery/jquery-3.6.3.min.js"></script>
+  <script defer src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script defer src="vendor/dropzone/js/dropzone.js"></script>
+  <script defer src="vendor/confetti/confetti.js"></script>
+  <script defer src="js/public.js"></script>
+  <script defer src="js/uploader.js"></script>
+  <script defer src="js/popup.js"></script>
+  <script defer src="_locales/language.js"></script>
+</head>
+
+<body class="bg-light">
+  <div class="shadow-lg" id="header">
+    <div class="container-md">
+      <header class="py-3">
+        <ul class="nav justify-content-end nav-pills ">
+          <li class="nav-item">
+            <a class="nav-link" style="font-weight: bold;transform: scale3d(1.1, 1.1, 1.1);" href="popup.html"
+              data-i18n="Upload_page"><i class="bi bi-upload"></i> 上传页面</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="options.html" data-i18n="Settings_page">
+              <i class="bi bi-sliders"></i> 配置信息</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="UploadLog.html" data-i18n="Upload_log">
+              <i class="bi bi-images"></i> 上传记录</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="FAQ.html" data-i18n="FAQ"><i class="bi bi-question-circle"></i> 常见问题</a>
+          </li>
+        </ul>
+      </header>
+    </div>
+
+  </div>
+  <div class="container-md">
+    <h1 style="margin-top: 2rem; margin-bottom: 2rem;"><a class="title-a" href="#"></a></h1>
+    <p class="text-center text-bg-danger" id="Upload_Warning"></p>
+    <!-- 上传框 -->
+    <div class="Animation_button">
+      <form class="dropzone shadow-lg p-3 mb-5 bg-body-tertiary rounded Animation_button_span"
+        enctype="multipart/form-data" method="post" action=" ">
+      </form>
+    </div>
+    <div class="shadow-lg p-3 mb-5 bg-body-tertiary rounded LinksBox">
+      <div class="row" style="position: relative;">
+        <div class="text-center" id="ButtonBox">
+          <div id="popup_URL" class="urlButton Check" value="URL">URL</div>
+          <div id="popup_HTML" class="urlButton" value="HTML">HTML</div>
+          <div id="popup_BBCode" class="urlButton" value="BBCode">BBCode</div>
+          <div id="popup_Markdown" class="urlButton" value="Markdown">Markdown</div>
+          <div id="popup_MDwithlink" class="urlButton" value="MDWithLink">MD with link</div>
+        </div>
+        <div class="col">
+          <div class="border-bottom text-center" style="display: flex; justify-content: flex-end;">
+            <a class="popup-Select" target="_blank" href="https://github.com/ZenEcho/PLExtension"><i
+                class="bi bi-github"></i> GitHub</a>
+            <div id="popup-Select-All" class="popup-Select" data-i18n="Select_All"><i
+                class="bi bi-check-circle-fill"></i>全选</div>
+            <div id="popup-Select-cancel" class="popup-Select" data-i18n="Select_cancel"><i
+                class="bi bi-check-circle"></i>取消</div>
+            <div id="popup-Copy-Selected" class="popup-Select" data-i18n="Copy_Selected"><i
+                class="bi bi-clipboard2-check-fill"></i>复制选中</div>
+          </div>
+
+          <div id="textFrame" class="textFrame">
+            <div class="Upload_Return_Box">
+              <div class="col">
+                <p class="p_urls" data-i18n="Upload_return_information">上传成功后URL将会显示在这里</p>
+              </div>
+              <div class="text-center selector_p_urls">
+                <span data-i18n="Selected">选择</span>
+              </div>
+              <div class="text-center copy">
+                <span data-i18n="Copy">复制</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="em1 LinksBox">
+      <ul class="ul" data-i18n="popup_upload_warning">
+        <p>当前使用的是:
+          <span class="exeinfo_p"></span>,上传失败报错了?打开浏览器的开发者工具(按F12)查看错误信息,然后查看
+          <a target="_blank" style="color: red;" href="FAQ.html">【常见问题】</a>
+        </p>
+        <p>禁止上传色情/反动/暴力违规违反 <span style="color: #03a9f4;">TOS</span> 的图片,造成的一切恶果由图片上传者承担!</p>
+      </ul>
+    </div>
+  </div>
+  <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+</body>
+
+</html>

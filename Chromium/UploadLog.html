@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="UploadLog_title">上传记录</title>
+  <link rel="shortcut icon" href="icons/logo256.png" type="image/x-icon">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/public.css">
+  <link rel="stylesheet" href="css/UploadLog.css">
+  <script src="vendor/jquery/jquery-3.6.3.min.js"></script>
+
+  <script src="vendor/UploadLog/masonry.pkgd.js"></script>
+  <script src="vendor/UploadLog/imagesloaded.pkgd.min.js"></script>
+  <script src="vendor/UploadLog/jquery.twbsPagination.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script defer src="_locales/language.js"></script>
+</head>
+
+<body>
+  <div class="shadow-lg" id="header">
+    <div class="container-md">
+      <header class="py-3">
+        <ul class="nav justify-content-end nav-pills ">
+          <li class="nav-item">
+            <a class="nav-link" href="popup.html" data-i18n="Upload_page"><i class="bi bi-upload"></i> 上传页面</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="options.html" data-i18n="Settings_page">
+              <i class="bi bi-sliders"></i> 配置信息</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="font-weight: bold;transform: scale3d(1.1, 1.1, 1.1);" href="UploadLog.html" data-i18n="Upload_log">
+              <i class="bi bi-images"></i> 上传记录</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="FAQ.html" data-i18n="FAQ"><i class="bi bi-question-circle"></i> 常见问题</a>
+          </li>
+        </ul>
+      </header>
+    </div>
+  </div>
+  <div class="container-fluid shadow-lg" style="padding-top: 2rem;">
+    <div class="container-md PLdanger">
+    </div>
+    <div class="container-md border-bottom head">
+      <div class="Selected_But">
+        <button id="Browse_mode_switch_button" type="button" class="css-button-rounded--black" data-bs-toggle="popover"
+          data-bs-trigger="hover focus" data-bs-content="现在是浏览本地图片模式呢！">切换到本地</button>
+      </div>
+      <div class="Selected_But">
+        <button type="button" class="css-button-rounded--sky" id="Select_mode" data-i18n="UploadLog_Select"><i
+            class="bi bi-ui-checks-grid"></i>
+          选择</button>
+      </div>
+      <div class="Selected_But">
+        <button type="button" class="css-button-rounded--sky" id="Select_All" data-i18n="UploadLog_Select_All"><i
+            class="bi bi-check-circle-fill"></i>
+          全选</button>
+      </div>
+      <div class="Selected_But">
+        <button type="button" class="css-button-rounded--sky" id="Select_cancel" data-i18n="UploadLog_Select_cancel"><i
+            class="bi bi-check-circle"></i>
+          取消</button>
+      </div>
+
+      <div class="btn-group Selected_But Copy_Selected">
+        <button type="button" class="btn btn-outline-primary" id="Copy_Selected" data-i18n="UploadLog_Copy_Selected"><i
+            class="bi bi-clipboard2-check-fill"></i> 复制选中</button>
+        <button id="dropdown-button" type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+          data-bs-toggle="dropdown" aria-expanded="false"></button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" value="URL">URL</a></li>
+          <li><a class="dropdown-item" href="#" value="HTML">HTML</a></li>
+          <li><a class="dropdown-item" href="#" value="BBCode">BBCode</a></li>
+          <li><a class="dropdown-item" href="#" value="Markdown">Markdown</a></li>
+          <li><a class="dropdown-item" href="#" value="MD with link">MD with link</a></li>
+        </ul>
+      </div>
+
+      <div class="Selected_But">
+        <button type="button" class="css-button-rounded--sky" id="Delete_Selected"
+          data-i18n="UploadLog_Delete_Selected"><i class="bi bi-x-circle-fill"></i>
+          删除选中</button>
+      </div>
+
+    </div>
+    <div class="container-md head">
+      <div class="input-group Selected_But" style="width: auto; display: none;">
+        <span class="input-group-text" id="inputGroup-sizing-default" data-i18n="Path">路径</span>
+        <input type="text" class="form-control options_UploadPath">
+        <button class="btn btn-outline-secondary" type="button" id="options_UploadPath">GoGo</button>
+      </div>
+      <div class="btn-group Selected_But" role="group" id="Time_sorting">
+        <button type="button" class="css-button-arrow--sky" data-bs-toggle="dropdown" aria-expanded="false"
+          data-i18n="Time_sorting">
+          <i class="bi bi-filter-circle"></i> 时间排序
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" value="First" data-i18n="Time_sorting_First"><i
+                class="bi bi-sort-down"></i> 最先排前</a></li>
+          <li><a class="dropdown-item" href="#" value="Last" data-i18n="Time_sorting_Last"><i
+                class="bi bi-sort-down-alt"></i> 最后排前</a></li>
+        </ul>
+      </div>
+      <div class="btn-group Selected_But" role="group" id="Size_sorting">
+        <button type="button" class="css-button-arrow--sky" data-bs-toggle="dropdown" aria-expanded="false"
+          data-i18n="Size_sorting">
+          <i class="bi bi-filter-circle"></i> 大小排序
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" value="First" data-i18n="Size_sorting_First"><i
+                class="bi bi-sort-down"></i> 最大排前</a></li>
+          <li><a class="dropdown-item" href="#" value="Last" data-i18n="Size_sorting_Last"><i
+                class="bi bi-sort-down-alt"></i> 最小排前</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+  <!-- 图片 -->
+  <div id="container" class="container-fluid">
+  </div>
+
+  <div class="shadow-lg foot">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" href="#">最前</a></li>
+        <li class="page-item"><a class="page-link" href="#">L</a></li>
+        <li class="page-item"><a class="page-link" href="#">O</a></li>
+        <li class="page-item"><a class="page-link" href="#">V</a></li>
+        <li class="page-item"><a class="page-link" href="#">E</a></li>
+        <li class="page-item"><a class="page-link" href="#">最后</a></li>
+      </ul>
+    </nav>
+    <div class="d-grid gap-2 col-6 mx-auto" id="Bottom_button">
+      <button type="button" class="css-button-rounded--sky" id="deleteUrl" data-bs-toggle="popover"
+        data-bs-trigger="hover focus" data-bs-content="只能清除当前页噢！" data-i18n="UploadLog_deleteUrl">清除本页记录</button>
+      <button type="button" class="css-button-rounded--sky" id="DeleteALL" data-bs-toggle="popover"
+        data-bs-trigger="hover focus" data-bs-content="这是一个方便的快捷的一键清空日志按钮" data-i18n="DeleteALL">一键清空记录</button>
+    </div>
+  </div>
+
+  </div>
+
+
+
+  <div class="fixed-bottom">
+  </div>
+  <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+  <script src="js/UploadLog.js"></script>
+  <script src="js/public.js"></script>
+</body>
+
+</html>

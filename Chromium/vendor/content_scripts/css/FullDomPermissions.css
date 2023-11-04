@@ -1,0 +1,213 @@
+ .insertContentIntoEditorPrompt {
+   text-align: center;
+   font-size: 14px;
+   /* width: 52px;
+   height: 14px;
+   line-height: 14px; */
+   color: #fff;
+   padding: 5px 10px !important;
+   font-weight: bold;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   position: relative;
+   display: inline-block;
+   outline: none;
+   overflow: hidden;
+   border-radius: 5px;
+   border: none;
+   background-color: #3a86ff;
+ }
+
+ .insertContentIntoEditorPrompt:hover {
+   padding-right: 14px !important;
+   padding-left: 12px !important;
+ }
+
+ .insertContentIntoEditorPrompt:hover:after {
+   opacity: 1;
+   right: 4px;
+ }
+
+ .insertContentIntoEditorPrompt:after {
+   content: "\00BB";
+   position: absolute;
+   opacity: 0;
+   font-size: 14px;
+   /* line-height: 14px; */
+   padding: 5px 0;
+   top: 0;
+   right: -20px;
+   transition: 0.4s;
+ }
+
+ .PL-EmoticonBox {
+   font-size: 14px;
+   user-select: none;
+   border-radius: 14px;
+   width: 0px;
+   height: 200px;
+   background-color: #dddddd26;
+   position: absolute;
+   padding: 0;
+   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+   z-index: 1000;
+   max-height: 200px;
+   display: none;
+   transition: width .5s ease;
+ }
+
+ .StickerBox {
+   display: flex;
+   flex-direction: column;
+ }
+
+ .StickerBoxRemove {
+   position: absolute;
+   width: 2em;
+   line-height: 2em;
+   top: -1em;
+   right: -1em;
+   border-radius: 50%;
+   color: white;
+   background-color: #F44336;
+   text-align: center;
+ }
+
+ .StickerBoxLeft {
+   display: none;
+   position: absolute;
+   left: -120px;
+   top: 40px;
+   width: 120px;
+   height: 150px;
+   background: #eee;
+   border-radius: 14px 0px 0 14px;
+   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+
+ }
+
+ .StickerBoxLeftBut {
+   position: absolute;
+   top: 40px;
+   left: 0px;
+   font-size: 14px;
+   line-height: 14px;
+   text-align: center;
+ }
+
+ .StickerBoxright {
+   display: flex;
+   position: absolute;
+   right: -155px;
+   top: 40px;
+   width: 150px;
+   height: 160px;
+   align-items: center;
+ }
+
+ .StickerBoxright img {
+   max-height: 160px;
+ }
+
+ img {
+   box-shadow: none !important;
+   border: none !important;
+ }
+
+ .StickerBoxRemove:hover {
+   background-color: #cf372c;
+
+ }
+
+ .StickerHead {
+   height: 40px;
+ }
+
+ .StickerBoxhead {
+   border-radius: 14px 14px 0 0;
+   background-color: #0f62fe;
+   color: white;
+   display: flex;
+   overflow-x: hidden;
+   white-space: nowrap;
+   padding: 0em 16px;
+   /* 添加滚动条以处理溢出内容 */
+ }
+
+ .StickerBoxhead:active {
+   cursor: grabbing;
+   /* 设置鼠标样式为“抓取中” */
+ }
+
+ .StickerBoxheadtem {
+   user-select: none;
+   font-size: 16px;
+   padding: 3px 16px !important;
+   margin: 5px 0px !important;
+   border-radius: 16px;
+   text-align: center;
+ }
+
+ .StickerBoxheadtem:hover {
+   background: #3a86ff;
+ }
+
+ .StickerBoxContent {
+   height: 156px;
+   display: flex;
+   flex-wrap: wrap;
+   margin-top: 4px;
+   padding: 0 4px;
+   justify-content: center;
+   align-items: center;
+   overflow: auto;
+ }
+
+ .StickerBoxContentitem {
+   user-select: none;
+   margin: 5px
+ }
+
+ .StickerBoxContentitem:hover {
+   transform: scale3d(1.1, 1.1, 1.1);
+ }
+
+ .StickerBoxContentitem img {
+   width: 54px;
+ }
+
+ .StickerAuthor {
+   width: 100%;
+   text-align: center;
+ }
+
+ .PL-v2exImgMark::before {
+   position: absolute;
+   bottom: 0px;
+   right: 0;
+   content: "❤️";
+   font-size: 12px;
+   line-height: 12px;
+   color: red;
+ }
+
+ .PL-ImgMark {
+   width: 100%;
+ }
+
+ .PL-ImgMark::before {
+   position: absolute;
+   top: 0px;
+   left: 0px;
+   content: "❤️";
+   font-size: 12px;
+   line-height: 12px;
+   color: red;
+ }
+
+ .position-relative {
+   position: relative;
+ }

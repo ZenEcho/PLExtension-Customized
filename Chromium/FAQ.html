@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>常见问题</title>
+  <link rel="shortcut icon" href="icons/logo256.png" type="image/x-icon">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap-icons.css">
+  <script defer src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="css/public.css">
+  <script defer src="_locales/language.js"></script>
+  <style>
+    body {
+      min-width: 750px;
+      font-size: 1rem;
+    }
+
+
+    img {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+  <div class="shadow-lg" id="header">
+    <div class="container-md ">
+      <header class="py-3">
+        <ul class="nav justify-content-end nav-pills ">
+          <li class="nav-item">
+            <a class="nav-link" href="popup.html" data-i18n="Upload_page"><i class="bi bi-upload"></i> 上传页面</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="options.html" data-i18n="Settings_page">
+              <i class="bi bi-sliders"></i> 配置信息</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="UploadLog.html" data-i18n="Upload_log">
+              <i class="bi bi-images"></i> 上传记录</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="font-weight: bold;transform: scale3d(1.1, 1.1, 1.1);" href="FAQ.html"
+              data-i18n="FAQ"><i class="bi bi-question-circle"></i>
+              常见问题</a>
+          </li>
+        </ul>
+      </header>
+    </div>
+  </div>
+
+  <div class="container-md" style="margin-top:calc(var(--bs-gutter-x) * .5) ;">
+
+
+    <p>使用Ctrl+F快速搜索</p>
+    <p> 请使用开发者工具(F12)查看错误代码</p>
+    <div class="row ">
+      <div class="col-4 ">
+        <nav id="faq_key" class="h-100 flex-column align-items-stretch pe-4 border-end">
+          <nav class="nav nav-pills flex-column">
+            <a class="nav-link" href="#item-1">常见问题</a>
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link ms-3 my-1" href="#item-1-1">欢迎使用XXX</a>
+              <a class="nav-link ms-3 my-1" href="#item-1-2">你的问题将得到解决</a>
+            </nav>
+          </nav>
+        </nav>
+      </div>
+
+      <div class="col-8 box-shadow">
+        <div data-bs-spy="scroll" data-bs-target="faq_key" data-bs-smooth-scroll="true" tabindex="0">
+
+          <div id="item-1-1" class="p-3 border-bottom ">
+            <h4 style="color:#03a9f4;">标题</h4>
+            <p>内容</p>
+            <p>内容</p>
+            <p>内容</p>
+            <p>内容</p>
+            <p>内容</p>
+            <p>内容</p>
+            <p>内容</p>
+            <p>内容</p>
+          </div>
+          <div id="item-1-2" class="p-3 border-bottom ">
+            <h4 style="color:#03a9f4;">标题2</h4>
+            <p>内容2</p>
+            <p>内容2</p>
+            <p>内容2</p>
+            <p>内容2</p>
+            <p>内容2</p>
+            <p>内容2</p>
+            <p>内容2</p>
+            <p>内容2</p>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="vendor/jquery/jquery-3.6.3.min.js"></script>
+  <script src="/js/faq.js"></script>
+</body>
+
+</html>
