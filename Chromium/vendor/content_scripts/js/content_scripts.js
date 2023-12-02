@@ -614,7 +614,7 @@ const dataWithFunctions = {
                                                 ]
                                             };
 
-                                            fetch("https://pnglog.com/user/tokens", {
+                                            fetch(window.location.origin + "/user/tokens", {
                                                 "headers": {
                                                     "accept": "application/json, text/plain, */*",
                                                     "content-type": "application/json",
