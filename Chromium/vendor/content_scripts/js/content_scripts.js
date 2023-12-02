@@ -421,15 +421,22 @@ chrome.storage.local.get(storagelocal, function (result) {
     let Simulated_upload = false//模拟上传
     window.addEventListener('message', function (event) {
         if (event.data.type === 'Detect_installation_status') {
-            // 收到盘络扩展网站传来的信息
-            let Function_Start_button = document.getElementById("Function_Start_button")
-            Function_Start_button.innerText = "Let's go"
-            Function_Start_button.classList.add("Function_Start_button");
-            Function_Start_button.addEventListener('click', (e) => {
-                setTimeout(() => {
-                    chrome.runtime.sendMessage({ Functional_Demonstration: "点击上传演示" });
-                }, 800); // 延迟1秒执行
-            })
+            uploadArea.classList.remove('box-shadow-Blink');
+            uploadArea.classList.add('box-shadow-Blink');
+            if (uploadArea_Left_or_Right == "Left") {
+                uploadArea.style.left = "0";
+            } else {
+                uploadArea.style.right = "0";
+            }
+            // // 收到盘络扩展网站传来的信息
+            // let Function_Start_button = document.getElementById("Function_Start_button")
+            // Function_Start_button.innerText = "Let's go"
+            // Function_Start_button.classList.add("Function_Start_button");
+            // Function_Start_button.addEventListener('click', (e) => {
+            //     setTimeout(() => {
+            //         chrome.runtime.sendMessage({ Functional_Demonstration: "点击上传演示" });
+            //     }, 800); // 延迟1秒执行
+            // })
         }
         if (event.data.type === 'Extension') {
             let extensionInfo = {
@@ -439,10 +446,48 @@ chrome.storage.local.get(storagelocal, function (result) {
             };
             window.postMessage({ type: 'ExtensionResponse', data: extensionInfo }, event.origin);
         }
+        if (event.data.type === 'loadExternalConfig' && event.data.data !== null) {
+            let data = event.data.data
+            storProgramConfiguration(data.data)
+                .then(() => {
+                    PLNotification({
+                        title: "导入成功",
+                        type: "success",
+                        content: "外部数据导入成功,使用时请刷新一次页面以便扩展完成初始化",
+                        duration: 10,
+                    });
+                    chrome.storage.sync.get("BedConfig").then(result => {
+                        let BedConfig = result.BedConfig || [];
+                        if (!BedConfig.some(existingData => isSameData(existingData.data, data.data))) {
+                            data.index = 1000 + BedConfig.length + 1
+                            BedConfig.push(data);
+                            chrome.storage.sync.set({ "BedConfig": BedConfig });
+                        }
+                    });
+                })
+                .catch((error) => {
+                    PLNotification({
+                        title: "导入失败",
+                        type: "error",
+                        content: "外部数据导入失败,详细报错请打开,开发者控制台(F12)查看",
+                        duration: 15,
+                    });
+                    console.log(error);
+                });
+        }
         if (event.data.type === 'insertContentIntoEditorPrompt_Click' && event.data.data === true) {
             iframeShow()
         }
     });
+    function isSameData(data1, data2) {
+        const excludedProps = ['ConfigName'];
+        for (const key of Object.keys(data2)) {
+            if (!excludedProps.includes(key) && data1[key] !== data2[key]) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     function Drag_upload_animations() {
         iframeHide()
@@ -536,3 +581,169 @@ chrome.storage.local.get(storagelocal, function (result) {
     }
 
 })
+
+
+const dataWithFunctions = {
+    "lsky": {
+        "url": "/user/tokens",
+        "element": "#token-create",
+        "function": function () {
+            let pathname = localStorage.getItem(getCurrentDomain())
+            if (pathname !== "true") {
+                PLNotification({
+                    title: `发现：` + chrome.i18n.getMessage("app_name") + `可配置图床`,
+                    type: "警告",
+                    content: `点击【添加到` + chrome.i18n.getMessage("app_name") + `】按钮，可一键配置扩展`,
+                    duration: 0,
+                    button: [
+                        {
+                            text: "添加到" + chrome.i18n.getMessage("app_name"),
+                            style: "padding: 2px;width: 100%;border: none;border-radius: 10px;margin-bottom: 5px;",
+                            init: function () {
+                                let button = this
+                                this.addEventListener("click", function () {
+                                    // 发送当前标签页的 URL 到后台脚本
+                                    chrome.runtime.onMessage.addListener(function (request) {
+                                        if (request.XSRF_TOKEN) {
+                                            let data = {
+                                                "name": chrome.i18n.getMessage("app_name"),
+                                                "abilities": [
+                                                    "user:profile", "image:tokens", "image:upload",
+                                                    "image:list", "image:delete", "album:list",
+                                                    "album:delete", "strategy:list"
+                                                ]
+                                            };
+
+                                            fetch("https://pnglog.com/user/tokens", {
+                                                "headers": {
+                                                    "accept": "application/json, text/plain, */*",
+                                                    "content-type": "application/json",
+                                                    "x-xsrf-token": request.XSRF_TOKEN
+                                                },
+
+                                                "body": JSON.stringify(data),
+                                                "method": "POST",
+                                            }).then(response => response.json())
+                                                .then((data) => {
+                                                    if (data.data) {
+                                                        let config = {
+                                                            "data": {
+                                                                "options_album_id": "",
+                                                                "options_exe": "Lsky",
+                                                                "options_host": getCurrentDomain(),
+                                                                "options_permission_select": "0",
+                                                                "options_source_select": "2",
+                                                                "options_token": "Bearer " + data.data.token
+                                                            },
+                                                            "ConfigName": chrome.i18n.getMessage("app_name")
+                                                        }
+                                                        window.postMessage({ type: 'loadExternalConfig', data: config }, "*");
+                                                        button.disabled = true
+                                                    } else {
+                                                        console.log(data);
+                                                        PLNotification({
+                                                            title: "添加失败",
+                                                            type: "error",
+                                                            content: "详细报错请打开,开发者控制台(F12)查看",
+                                                            duration: 15,
+                                                        });
+                                                    }
+
+                                                })
+                                                .catch((error) => {
+                                                    console.error('Error:', error)
+                                                    PLNotification({
+                                                        title: "添加失败",
+                                                        type: "error",
+                                                        content: "详细报错请打开,开发者控制台(F12)查看",
+                                                        duration: 15,
+                                                    });
+                                                });
+                                        }
+                                    });
+                                    chrome.runtime.sendMessage({ getXsrfToken: 'getXsrfToken', url: window.location.href });
+                                });
+                            }
+                        },
+                        {
+                            text: "本站不再提示",
+                            style: "padding: 2px;width: 100%;border: none;border-radius: 10px;",
+                            init: function (close) {
+                                this.addEventListener("click", function () {
+                                    localStorage.setItem(getCurrentDomain(), "true");
+                                    close();
+                                });
+                            }
+                        }
+                    ]
+                });
+            }
+
+        }
+    }
+};
+
+// 检查当前页面的函数
+function checkAndExecute() {
+    const currentPath = window.location.pathname;
+
+    for (const key in dataWithFunctions) {
+        if (dataWithFunctions.hasOwnProperty(key)) {
+            const info = dataWithFunctions[key];
+            if (currentPath === info.url && document.querySelector(info.element) !== null) {
+                info.function();
+                return;
+            }
+        }
+    }
+}
+function getCurrentDomain() {
+    return window.location.hostname;
+}
+setTimeout(checkAndExecute, 500);
+
+
+
+const runtimeSendMessage = (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage)
+    ? chrome.runtime.sendMessage.bind(chrome.runtime) // 绑定 chrome.runtime
+    : (typeof browser !== 'undefined' && browser.runtime && browser.runtime.sendMessage)
+        ? browser.runtime.sendMessage.bind(browser.runtime) // 绑定 browser.runtime
+        : null;
+let isError = 0
+// 扩展刷新页面错误的检测
+function checkForInvalidatedContext() {
+    if (!runtimeSendMessage) {
+        console.warn('消息发送API不可用');
+        return;
+    }
+    try {
+        runtimeSendMessage({});
+    } catch (error) {
+        if (error.message.includes("Extension context invalidated.")) {
+            if (isError === 0) {
+                if (confirm(`检测到程序被重启，是否重新加载当前页？`)) {
+                    window.location.reload();
+                }
+            }
+            if (isError === 20) { // 一分钟后
+                if (confirm(`1分钟已过去,页面仍未重启,是否重新加载当前页？`)) {
+                    window.location.reload();
+                }
+            }
+            if (isError === 60) { // 三分钟后
+                if (confirm(`3分钟已过去,为了更好的体验,请刷新一下吧。`)) {
+                    window.location.reload();
+                }
+            }
+            if (isError === 200) { // 十分钟后
+                if (confirm(`10分钟已过去,最后一次提示了,不刷新扩展功能会受到限制的！`)) {
+                    window.location.reload();
+                }
+            }
+            isError++
+        }
+    }
+}
+
+// 定期执行检查
+setInterval(checkForInvalidatedContext, 3000);

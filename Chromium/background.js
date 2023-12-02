@@ -84,7 +84,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 			const previousVersion = result.extensionVersion;
 			const currentVersion = chrome.runtime.getManifest().version;
 			if (previousVersion !== currentVersion) {
-				console.log('扩展已更新，执行命令...');
+				console.log("升级..");
 			}
 		});
 	}
@@ -215,7 +215,6 @@ function Fetch_Upload(imgUrl, data, MethodName, callback) {
 			// 自定义上传属性
 			let optionsUrl
 			let optionHeaders
-			console.log(file);
 			/**
 			 * 上传到图床
 			 */
@@ -232,6 +231,84 @@ function Fetch_Upload(imgUrl, data, MethodName, callback) {
 					}
 					formData.append("permission", options_permission_select);
 					break;
+				case 'EasyImages':
+					optionsUrl = options_proxy_server + "https://" + options_host + "/api/index.php";
+					formData.append('image', file);
+					formData.append('token', options_token);
+					break;
+				case 'ImgURL':
+					optionsUrl = options_proxy_server + "https://" + options_host + "/api/v2/upload";
+					formData.append('uid', options_uid);
+					formData.append('token', options_token);
+					formData.append('file', file);
+					break;
+				case 'SM_MS':
+					optionsUrl = options_proxy_server + "https://" + options_host + "/api/v2/upload";
+					optionHeaders = { "Authorization": options_token };
+					formData.append('smfile', file);
+					break;
+				case 'Chevereto':
+					let Temporary_URL = ""
+					if (options_expiration_select != "NODEL") {
+						Temporary_URL += "&expiration=" + options_expiration_select
+					}
+					if (options_album_id) {
+						Temporary_URL += "&album_id=" + options_album_id
+					}
+					if (options_nsfw_select) {
+						Temporary_URL += "&nsfw=" + options_nsfw_select
+					}
+					optionsUrl = options_proxy_server + "https://" + options_host + "/api/1/upload/?key=" + options_token;
+					optionHeaders = { "Authorization": options_token };
+					formData.append('source', file);
+					break;
+				case 'Hellohao':
+					optionsUrl = options_proxy_server + "https://" + options_host + "/api/uploadbytoken/";
+					formData.append('file', file);
+					formData.append('token', options_token);
+					formData.append('source', options_source);
+					break;
+				case 'Imgur':
+					optionsUrl = options_proxy_server + "https://" + options_host + "/3/upload";
+					optionHeaders = { "Authorization": 'Client-ID ' + options_token };
+					formData.append("image", file);
+					break;
+				case 'Telegra_ph':
+					optionsUrl = options_proxy_server + "https://" + options_host + "/upload";
+					optionHeaders = { "Accept": "application/json" };
+					formData.append("file", file);
+					break;
+				case 'imgdd':
+					optionsUrl = options_proxy_server + "https://" + options_host + "/api/v1/upload";
+					optionHeaders = { "Accept": "application/json", "User-Agent": "PLExtension" };
+					formData.append("image", file);
+					break;
+				case 'BaiJiaHaoBed':
+					optionsUrl = options_proxy_server + "https://baijiahao.baidu.com/pcui/picture/upload";
+					optionHeaders = { "Accept": "application/json" };
+					formData.append("media", file);
+					formData.append("type", "image");
+					break;
+				case 'freebufBed':
+					optionsUrl = options_proxy_server + "https://www.freebuf.com/fapi/frontend/upload/image";
+					optionHeaders = {
+						"Accept": "application/json, text/plain, */*",
+						"Referer": "https://www.freebuf.com/write",
+						"User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+					};
+					formData.append("file", file);
+					break;
+				case 'toutiaoBed':
+					const randomAid = Math.floor(Math.random() * 24) + 1;
+					optionsUrl = options_proxy_server + `https://i.snssdk.com/feedback/image/v1/upload/?appkey=toutiao_web-web&aid=` + randomAid + `&app_name=toutiao_web`;
+					optionHeaders = {
+						"Accept": "application/json, text/plain, */*",
+						"Referer": "https://helpdesk.bytedance.com/",
+						"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.31"
+					};
+					formData.append("image", file);
+					formData.append("app_id", randomAid);
+					break;
 			}
 			fetch(optionsUrl, {
 				method: 'POST',
@@ -245,6 +322,59 @@ function Fetch_Upload(imgUrl, data, MethodName, callback) {
 					switch (options_exe) {
 						case 'Lsky':
 							imageUrl = res.data.links.url
+							break;
+						case 'EasyImages':
+							imageUrl = res.url
+							break;
+						case 'ImgURL':
+							imageUrl = res.data.url
+							break;
+						case 'SM_MS':
+							if (res.code == "image_repeated") {
+								imageUrl = res.images
+							} else {
+								imageUrl = res.data.url
+							}
+							break;
+						case 'Chevereto':
+							imageUrl = res.image.url
+							break;
+						case 'Hellohao':
+							imageUrl = res.data.url
+							break;
+						case 'Imgur':
+							imageUrl = res.data.link
+							break;
+						case 'UserDiy':
+							let options_return_success_value = res;
+							options_return_success.split('.').forEach(function (prop) {
+								if (options_return_success_value) {
+									options_return_success_value = options_return_success_value[prop];
+								}
+							});
+							imageUrl = options_return_success_value
+							options_host = options_apihost
+							break;
+						case 'Telegra_ph':
+							if (res.error) {
+								showNotification(null, res.error)
+								UploadStatus(0)
+								return;
+							}
+							if (result.ProgramConfiguration.options_Custom_domain_name) {
+								imageUrl = result.ProgramConfiguration.options_Custom_domain_name + res[0].src;
+							} else {
+								imageUrl = `https://telegra.ph` + res[0].src;
+							}
+							break;
+						case 'imgdd':
+							imageUrl = res.url
+							break;
+						case 'BaiJiaHaoBed':
+							imageUrl = res.ret.https_url;
+							break;
+						case 'freebufBed':
+							imageUrl = res.data.url.replace(/\\/g, "").replace('!small', '');
 							break;
 					}
 
@@ -265,55 +395,36 @@ function Fetch_Upload(imgUrl, data, MethodName, callback) {
 						if (!Array.isArray(UploadLog)) {
 							UploadLog = [];
 						}
-						function generateRandomKey() {
-							return new Promise(resolve => {
-								const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-								let key = '';
-								for (let i = 0; i < 6; i++) {
-									key += characters.charAt(Math.floor(Math.random() * characters.length));
-								}
-								// 确保不会重复
-								while (UploadLog.some(log => log.id === key)) {
-									key = '';
-									for (let i = 0; i < 6; i++) {
-										key += characters.charAt(Math.floor(Math.random() * characters.length));
-									}
-								}
-								resolve(key);
-							});
+						const UploadLogData = {
+							key: crypto.randomUUID(),
+							url: imageUrl,
+							uploadExe: options_exe + "-" + MethodName,
+							upload_domain_name: options_host,
+							original_file_name: UrlImgNema,
+							file_size: file.size,
+							img_file_size: chrome.i18n.getMessage("img_file_size"),
+							uploadTime: getFullYear + "年" + getMonth + "月" + getDate + "日" + getHours + "时" + getMinutes + "分" + getSeconds + "秒"
 						}
-						generateRandomKey().then(key => {
-							const UploadLogData = {
-								key: key,
-								url: imageUrl,
-								uploadExe: options_exe + "-" + MethodName,
-								upload_domain_name: options_host,
-								original_file_name: UrlImgNema,
-								file_size: file.size,
-								img_file_size: chrome.i18n.getMessage("img_file_size"),
-								uploadTime: getFullYear + "年" + getMonth + "月" + getDate + "日" + getHours + "时" + getMinutes + "分" + getSeconds + "秒"
+						if (typeof UploadLog !== 'object') {
+							UploadLog = JSON.parse(UploadLog);
+						}
+						UploadLog.push(UploadLogData);
+						chrome.storage.local.set({ 'UploadLog': UploadLog }, function () {
+							showNotification(null, chrome.i18n.getMessage("Upload_prompt2"))
+						})
+						callback(res, null);
+						chrome.tabs.query({ active: true }, function (tabs) {
+							let currentTabId
+							try {
+								currentTabId = tabs[0].id;
+								chrome.tabs.sendMessage(currentTabId, { AutoInsert_message: imageUrl }, function (response) {
+									if (chrome.runtime.lastError) {
+										//发送失败
+										return;
+									}
+								});
+							} catch (error) {
 							}
-							if (typeof UploadLog !== 'object') {
-								UploadLog = JSON.parse(UploadLog);
-							}
-							UploadLog.push(UploadLogData);
-							chrome.storage.local.set({ 'UploadLog': UploadLog }, function () {
-								showNotification(null, chrome.i18n.getMessage("Upload_prompt2"))
-							})
-							callback(res, null);
-							chrome.tabs.query({ active: true }, function (tabs) {
-								let currentTabId
-								try {
-									currentTabId = tabs[0].id;
-									chrome.tabs.sendMessage(currentTabId, { AutoInsert_message: imageUrl }, function (response) {
-										if (chrome.runtime.lastError) {
-											//发送失败
-											return;
-										}
-									});
-								} catch (error) {
-								}
-							});
 						});
 					});
 				})
@@ -404,7 +515,12 @@ function Fetch_Upload(imgUrl, data, MethodName, callback) {
 			return;
 		}
 
-		if (options_exe == "UserDiy") {
+		if (options_exe === "UserDiy" ||
+			options_exe === "Tencent_COS" ||
+			options_exe === "Aliyun_OSS" ||
+			options_exe === "AWS_S3" ||
+			options_exe === "GitHubUP" ||
+			options_exe === "fiftyEight") {
 			const menuData = {
 				url: imgUrl,
 				Metho: MethodName
@@ -610,7 +726,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 	if (request.PLNotification) {
 		chrome.tabs.query({ active: true }, function (tabs) {
 			TabId = tabs[0].id;
-			chrome.tabs.sendMessage(TabId, { PLNotificationJS: request.Progress_bar })
+			chrome.tabs.sendMessage(TabId, { PLNotificationJS: request.PLNotification })
+		});
+	}
+	if (request.AutoInsert) {
+		chrome.tabs.query({ active: true }, function (tabs) {
+			TabId = tabs[0].id;
+			chrome.tabs.sendMessage(TabId, { AutoInsertFun: request.AutoInsert }, function (response) {
+				if (chrome.runtime.lastError) {
+					return;
+				}
+			});
 		});
 	}
 	if (request.exe_BilibliBed) {
@@ -620,6 +746,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 		chrome.tabs.create({
 			'url': ('options.html')
 		});
+	}
+	if (request.getXsrfToken) {
+		getXsrfToken(request.url);
 	}
 });
 let Simulated_upload = false//模拟上传
@@ -657,3 +786,58 @@ chrome.action.onClicked.addListener(function (tab) {
 	});
 
 });
+
+function getXsrfToken(url) {
+	chrome.cookies.get({ url: url, name: 'XSRF-TOKEN' }, function (cookie) {
+		if (cookie) {
+			chrome.tabs.query({ active: true }, function (tabs) {
+				TabId = tabs[0].id;
+				chrome.tabs.sendMessage(TabId, { XSRF_TOKEN: decodeURIComponent(cookie.value) }, function (response) {
+					if (chrome.runtime.lastError) {
+						return;
+					}
+				});
+			});
+		}
+	});
+}
+// 获取cookie #已弃用
+// 需manifest.json调用  "webRequest", "cookies"权限
+// function onRequestCompleted(details) {
+// 	if (!cookieFound && details.type === "xmlhttprequest") {
+// 		chrome.cookies.getAll({ url: details.initiator }, function (cookies) {
+// 			cookies.forEach(function (cookie) {
+// 				if (cookie.name === "SESSDATA" || cookie.name === "bili_jct") {
+// 					// 存储找到的Cookie
+// 					foundCookies[cookie.name] = decodeURIComponent(cookie.value);
+// 				}
+// 			});
+// 			// 检查是否找到了SESSDATA和bili_jct
+// 			if (foundCookies["SESSDATA"] && foundCookies["bili_jct"]) {
+// 				// 找到所需的Cookie，设置标志为true，并停止监听XHR请求
+// 				console.log(foundCookies);
+// 				chrome.storage.local.set({ 'options_token': foundCookies["SESSDATA"] })
+// 				chrome.storage.local.set({ 'options_CSRF': foundCookies["bili_jct"] })
+// 				cookieFound = true;
+// 				chrome.webRequest.onCompleted.removeListener(onRequestCompleted);
+// 			}
+// 		});
+// 	}
+// }
+// let cookieFound = false; // 标志用于表示是否已获取所需的Cookie
+// let foundCookies = {}; // 用于存储找到的Cookie
+
+// function getOptionsFromStorage() {
+// 	console.log("自动获取cookie中...");
+// 	chrome.storage.local.get(["options_exe", "options_token", "options_CSRF"], function (result) {
+// 		let { options_exe, options_token, options_CSRF } = result;
+// 		if (options_exe == "BilibliBed" && !options_token && !options_CSRF) {
+// 			// 添加监听器
+// 			cookieFound = false
+// 			foundCookies = {}
+// 			chrome.webRequest.onCompleted.addListener(onRequestCompleted, { urls: ["*://*.bilibili.com/*"] });
+// 		}
+
+// 	})
+// }
+

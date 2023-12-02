@@ -189,7 +189,163 @@ $(document).ready(function () {
       },
 
     ];
+    const EasyImagesCustomFormGroup = [
+      {
+        label: { class: "options_host", text: chrome.i18n.getMessage("options_host") },
+        input: {
+          type: "text", id: "options_host", inputPlaceholder: chrome.i18n.getMessage("options_host_placeholder_EasyImages"), required: true,
+        }
+      },
+      {
+        label: { class: "options_token", text: chrome.i18n.getMessage("options_token") },
+        input: {
+          type: "text", id: "options_token", inputPlaceholder: chrome.i18n.getMessage("options_token_placeholder_EasyImages"), required: true,
+        }
+      },
 
+    ];
+    const ImgURLCustomFormGroup = [
+      {
+        label: { class: "options_host", text: chrome.i18n.getMessage("options_host") },
+        input: {
+          type: "text", id: "options_host", inputPlaceholder: chrome.i18n.getMessage("options_host_placeholder_ImgURL"), required: true,
+        }
+      },
+      {
+        label: { class: "options_token", text: chrome.i18n.getMessage("options_token") },
+        input: {
+          type: "text", id: "options_token", inputPlaceholder: chrome.i18n.getMessage("options_token_placeholder_ImgURL"), required: true,
+        }
+      },
+      {
+        label: { class: "options_uid", text: chrome.i18n.getMessage("options_uid") },
+        input: {
+          type: "text", id: "options_uid", inputPlaceholder: chrome.i18n.getMessage("options_uid_placeholder"), required: true,
+        }
+      },
+
+    ];
+    const SM_MSCustomFormGroup = [
+      {
+        label: { class: "options_host", text: chrome.i18n.getMessage("options_host") },
+        input: {
+          type: "text", id: "options_host", inputPlaceholder: chrome.i18n.getMessage("options_host_placeholder_SM_MS"), required: true,
+        }
+      },
+      {
+        label: { class: "options_token", text: chrome.i18n.getMessage("options_token") },
+        input: {
+          type: "text", id: "options_token", inputPlaceholder: chrome.i18n.getMessage("options_token_placeholder_SM_MS"), required: true,
+        }
+      },
+    ];
+    const CheveretoCustomFormGroup = [
+      {
+        label: { class: "options_host", text: chrome.i18n.getMessage("options_host") },
+        input: {
+          type: "text", id: "options_host", inputPlaceholder: chrome.i18n.getMessage("options_host_placeholder_Chevereto"), required: true,
+        }
+      },
+      {
+        label: { class: "options_token", text: chrome.i18n.getMessage("options_token") },
+        input: {
+          type: "text", id: "options_token", inputPlaceholder: chrome.i18n.getMessage("options_token_placeholder_Chevereto"), required: true,
+        }
+      },
+      {
+        label: { class: "options_album_id", text: chrome.i18n.getMessage("options_album_id_Chevereto") },
+        input: {
+          type: "text", id: "options_album_id", inputPlaceholder: chrome.i18n.getMessage("options_album_id_placeholder_Chevereto"),
+        }
+      },
+      {
+        label: { class: "options_nsfw", text: chrome.i18n.getMessage("options_nsfw") },
+        select: {
+          id: "options_nsfw_select",
+          optionTag: [
+            { value: "0", text: chrome.i18n.getMessage("options_nsfw_0"), Selected: true },
+            { value: "1", text: chrome.i18n.getMessage("options_nsfw_1") },
+          ],
+        },
+      },
+      {
+        label: { class: "options_expiration", text: chrome.i18n.getMessage("options_expiration") },
+        select: {
+          id: "options_expiration_select",
+          optionTag: [
+            { value: "NODEL", text: chrome.i18n.getMessage("options_expiration_no"), Selected: true },
+            { value: "PT5M", text: chrome.i18n.getMessage("options_expiration_1") },
+            { value: "PT15M", text: chrome.i18n.getMessage("options_expiration_2") },
+            { value: "PT30M", text: chrome.i18n.getMessage("options_expiration_3") },
+            { value: "PT1H", text: chrome.i18n.getMessage("options_expiration_4") },
+            { value: "PT3H", text: chrome.i18n.getMessage("options_expiration_5") },
+            { value: "PT6H", text: chrome.i18n.getMessage("options_expiration_6") },
+            { value: "PT12H", text: chrome.i18n.getMessage("options_expiration_7") },
+            { value: "P1D", text: chrome.i18n.getMessage("options_expiration_8") },
+            { value: "P2D", text: chrome.i18n.getMessage("options_expiration_9") },
+            { value: "P3D", text: chrome.i18n.getMessage("options_expiration_10") },
+            { value: "P4D", text: chrome.i18n.getMessage("options_expiration_11") },
+            { value: "P5D", text: chrome.i18n.getMessage("options_expiration_12") },
+            { value: "P6D", text: chrome.i18n.getMessage("options_expiration_13") },
+            { value: "P1W", text: chrome.i18n.getMessage("options_expiration_14") },
+            { value: "P2W", text: chrome.i18n.getMessage("options_expiration_15") },
+            { value: "P3W", text: chrome.i18n.getMessage("options_expiration_16") },
+            { value: "P1M", text: chrome.i18n.getMessage("options_expiration_17") },
+            { value: "P2M", text: chrome.i18n.getMessage("options_expiration_18") },
+            { value: "P3M", text: chrome.i18n.getMessage("options_expiration_19") },
+            { value: "P4M", text: chrome.i18n.getMessage("options_expiration_20") },
+            { value: "P5M", text: chrome.i18n.getMessage("options_expiration_21") },
+            { value: "P6M", text: chrome.i18n.getMessage("options_expiration_22") },
+            { value: "P1Y", text: chrome.i18n.getMessage("options_expiration_23") },
+
+          ],
+        },
+      },
+    ];
+    const HellohaoCustomFormGroup = [
+      {
+        label: { class: "options_host", text: chrome.i18n.getMessage("options_host") },
+        input: {
+          type: "text", id: "options_host", inputPlaceholder: chrome.i18n.getMessage("options_host_placeholder_Hellohao"), required: true,
+        }
+      },
+      {
+        label: { class: "options_token", text: chrome.i18n.getMessage("options_token") },
+        input: {
+          type: "text", id: "options_token", inputPlaceholder: chrome.i18n.getMessage("options_token_placeholder_Hellohao"), required: true,
+        }
+      },
+      {
+        label: { class: "options_source", text: chrome.i18n.getMessage("options_source_Hellohao") },
+        input: {
+          type: "text", id: "options_source", inputPlaceholder: chrome.i18n.getMessage("options_source_placeholder_Hellohao"), required: true,
+        }
+      },
+    ];
+    const ImgurCustomFormGroup = [
+      {
+        label: { class: "options_host", text: chrome.i18n.getMessage("options_host") },
+        input: {
+          type: "text", id: "options_host", inputPlaceholder: chrome.i18n.getMessage("options_host_placeholder_Imgur"), required: true,
+        }
+      },
+      {
+        label: { class: "options_token", text: chrome.i18n.getMessage("options_token") },
+        input: {
+          type: "text", id: "options_token", inputPlaceholder: chrome.i18n.getMessage("options_token_placeholder_Imgur"), required: true,
+        }
+      },
+      {
+        additionalElement: [
+          `<div class="ImgurPostModeDiv " style="text-align: center;">Image
+          <label class="switch">
+            <input id="options_imgur_post_mode" type="checkbox">
+            <div class="slider round"></div>
+          </label>video
+          </div>`
+        ],
+      },
+    ];
     const UserCustomFormGroup = [
       {
         label: { class: "options_apihost", text: chrome.i18n.getMessage("options_apihost") },
@@ -409,6 +565,307 @@ $(document).ready(function () {
         ],
       },
     ];
+    const GitHubUPCustomFormGroup = [
+      {
+        label: { class: "options_owner", text: chrome.i18n.getMessage("options_owner") },
+        input: {
+          type: "text", id: "options_owner", inputPlaceholder: chrome.i18n.getMessage("options_owner_placeholder"), required: true,
+        }
+      },
+      {
+        label: { class: "options_repository", text: chrome.i18n.getMessage("options_repository") },
+        input: {
+          type: "text", id: "options_repository", inputPlaceholder: chrome.i18n.getMessage("options_repository_placeholder"), required: true,
+        }
+      },
+      {
+        label: { class: "options_UploadPath", text: chrome.i18n.getMessage("options_UploadPath") },
+        input: {
+          type: "text", id: "options_UploadPath", inputPlaceholder: chrome.i18n.getMessage("options_UploadPath_placeholder"),
+        }
+      },
+      {
+        label: { class: "options_token", text: chrome.i18n.getMessage("options_token_GitHub") },
+        input: {
+          type: "text", id: "options_token", inputPlaceholder: chrome.i18n.getMessage("options_token_placeholder_GitHub"), required: true,
+        },
+        additionalElement: [
+          `<div class="alert alert-warning" role="alert">
+          ${chrome.i18n.getMessage("options_GitHub_Warning")}
+          </div>`
+        ]
+      },
+    ];
+    const Tencent_COSCustomFormGroup = [
+      {
+        label: { class: "options_SecretId", text: chrome.i18n.getMessage("options_SecretId_COS") },
+        input: {
+          type: "text", id: "options_SecretId", inputPlaceholder: chrome.i18n.getMessage("options_SecretId_placeholder_COS"), required: true,
+        }
+      },
+      {
+        label: { class: "options_SecretKey", text: chrome.i18n.getMessage("options_SecretKey_COS") },
+        input: {
+          type: "password", id: "options_SecretKey", inputPlaceholder: chrome.i18n.getMessage("options_SecretKey_placeholder_COS"), required: true,
+        }
+      },
+      {
+        label: { class: "options_Bucket", text: chrome.i18n.getMessage("options_Bucket_COS") },
+        input: {
+          type: "text", id: "options_Bucket", inputPlaceholder: chrome.i18n.getMessage("options_Bucket_placeholder_COS"), required: true,
+        }
+      },
+      {
+        label: { class: "options_AppId", text: chrome.i18n.getMessage("options_AppId_COS") },
+        input: {
+          type: "text", id: "options_AppId", inputPlaceholder: chrome.i18n.getMessage("options_AppId_placeholder_COS"),
+        }
+      },
+      {
+        label: { class: "options_Region", text: chrome.i18n.getMessage("options_Region_COS") },
+        input: {
+          type: "text", id: "options_Region", inputPlaceholder: chrome.i18n.getMessage("options_Region_placeholder_COS"), required: true,
+        }
+      },
+      {
+        label: { class: "options_UploadPath", text: chrome.i18n.getMessage("options_UploadPath") },
+        input: {
+          type: "text", id: "options_UploadPath", inputPlaceholder: chrome.i18n.getMessage("options_UploadPath_placeholder"),
+        }
+      },
+      {
+        label: { class: "options_Custom_domain_name", text: chrome.i18n.getMessage("options_Custom_domain_name_COS") },
+        input: {
+          type: "url", id: "options_Custom_domain_name", inputPlaceholder: chrome.i18n.getMessage("options_Custom_domain_name_placeholder"),
+        }
+      },
+
+    ];
+    const Aliyun_OSSCustomFormGroup = [
+      {
+        label: { class: "options_SecretId", text: chrome.i18n.getMessage("options_SecretId_OSS") },
+        input: {
+          type: "text", id: "options_SecretId", inputPlaceholder: chrome.i18n.getMessage("options_SecretId_placeholder_OSS"), required: true,
+        }
+      },
+      {
+        label: { class: "options_SecretKey", text: chrome.i18n.getMessage("options_SecretKey_OSS") },
+        input: {
+          type: "password", id: "options_SecretKey", inputPlaceholder: chrome.i18n.getMessage("options_SecretKey_placeholder_OSS"), required: true,
+        }
+      },
+      {
+        label: { class: "options_Bucket", text: chrome.i18n.getMessage("options_Bucket_OSS") },
+        input: {
+          type: "text", id: "options_Bucket", inputPlaceholder: chrome.i18n.getMessage("options_Bucket_placeholder_OSS"), required: true,
+        }
+      },
+      {
+        label: { class: "options_Endpoint", text: chrome.i18n.getMessage("options_Endpoint_OSS") },
+        input: {
+          type: "text", id: "options_Endpoint", inputPlaceholder: chrome.i18n.getMessage("options_Endpoint_placeholder_OSS"), required: true,
+        }
+      },
+      {
+        label: { class: "options_Region", text: chrome.i18n.getMessage("options_Region_OSS") },
+        input: {
+          type: "text", id: "options_Region", inputPlaceholder: chrome.i18n.getMessage("options_Region_placeholder_OSS"), required: true,
+        }
+      },
+      {
+        label: { class: "options_UploadPath", text: chrome.i18n.getMessage("options_UploadPath") },
+        input: {
+          type: "text", id: "options_UploadPath", inputPlaceholder: chrome.i18n.getMessage("options_UploadPath_placeholder"),
+        }
+      },
+      {
+        label: { class: "options_Custom_domain_name", text: chrome.i18n.getMessage("options_Custom_domain_name_COS") },
+        input: {
+          type: "url", id: "options_Custom_domain_name", inputPlaceholder: chrome.i18n.getMessage("options_Custom_domain_name_placeholder"),
+        }
+      },
+
+    ];
+    const AWS_S3CustomFormGroup = [
+      {
+        label: { class: "options_SecretId", text: chrome.i18n.getMessage("options_SecretId_S3") },
+        input: {
+          type: "text", id: "options_SecretId", inputPlaceholder: chrome.i18n.getMessage("options_SecretId_placeholder_S3"), required: true,
+        }
+      },
+      {
+        label: { class: "options_SecretKey", text: chrome.i18n.getMessage("options_SecretKey_S3") },
+        input: {
+          type: "password", id: "options_SecretKey", inputPlaceholder: chrome.i18n.getMessage("options_SecretKey_placeholder_S3"), required: true,
+        }
+      },
+      {
+        label: { class: "options_Bucket", text: chrome.i18n.getMessage("options_Bucket_S3") },
+        input: {
+          type: "text", id: "options_Bucket", inputPlaceholder: chrome.i18n.getMessage("options_Bucket_placeholder_S3"), required: true,
+        }
+      },
+      {
+        label: { class: "options_Region", text: chrome.i18n.getMessage("options_Region_S3") },
+        input: {
+          type: "text", id: "options_Region", inputPlaceholder: chrome.i18n.getMessage("options_Region_placeholder_S3"), required: true,
+        }
+      },
+      {
+        label: { class: "options_Endpoint", text: chrome.i18n.getMessage("options_Endpoint_S3") },
+        input: {
+          type: "text", id: "options_Endpoint", inputPlaceholder: chrome.i18n.getMessage("options_Endpoint_placeholder_S3"),
+        }
+      },
+      {
+        label: { class: "options_UploadPath", text: chrome.i18n.getMessage("options_UploadPath") },
+        input: {
+          type: "text", id: "options_UploadPath", inputPlaceholder: chrome.i18n.getMessage("options_UploadPath_placeholder"),
+        }
+      },
+      {
+        label: { class: "options_Custom_domain_name", text: chrome.i18n.getMessage("options_Custom_domain_name_S3") },
+        input: {
+          type: "url", id: "options_Custom_domain_name", inputPlaceholder: chrome.i18n.getMessage("options_Custom_domain_name_placeholder"),
+        }
+      },
+
+    ];
+    const Telegra_phCustomFormGroup = [
+      {
+        additionalElement: [
+          `<div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">` + chrome.i18n.getMessage("Telegra_ph_1") + `</h4>
+            <p>` + chrome.i18n.getMessage("Telegra_ph_2") + `</p>
+            <hr>
+            <p class="mb-0">` + chrome.i18n.getMessage("Telegra_ph_3") + `</p>
+          </div>`
+        ]
+      },
+      {
+        label: { class: "options_Custom_domain_name", text: chrome.i18n.getMessage("options_Custom_domain_name_Telegra_ph") },
+        input: {
+          type: "url", id: "options_Custom_domain_name", inputPlaceholder: chrome.i18n.getMessage("options_Custom_domain_name_placeholder_Telegra_ph"),
+        }
+      },
+
+    ];
+    const imgddCustomFormGroup = [
+      {
+        label: { text: chrome.i18n.getMessage("options_host") },
+        input: {
+          type: "text", id: "options_host", inputPlaceholder: chrome.i18n.getMessage("options_host_placeholder_lsky"), required: true,
+        }
+      },
+    ];
+    const fiftyEightCustomFormGroup = [
+      {
+        additionalElement: [
+          ` <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">58同城接口</h4>
+            <p>无需配置,保存即可使用</p>
+            <hr>
+            <p class="mb-0">` + chrome.i18n.getMessage("Telegra_ph_3") + `</p>
+          </div>`
+        ]
+      },
+    ];
+    const BilibliBedCustomFormGroup = [
+      {
+        additionalElement: [
+          `<div class="alert alert-danger" role="alert">哔哩哔哩上传完全依赖后端上传,请部署后端服务!</div>`
+        ]
+      },
+      {
+        label: { class: "options_apihost", text: "后端请求地址<p>(为空时使用默认后端)" },
+        input: {
+          type: "url", id: "options_apihost", inputPlaceholder: "无法携带cookie，填写完整url",
+        }
+      },
+      {
+        label: { class: "options_token", text: "SESSDATA<p>(为空时:登录哔哩哔哩自动获取)</p>" },
+        input: {
+          type: "text", id: "options_token", inputPlaceholder: "SESSDATA值",
+        }
+      },
+      {
+        label: { class: "options_CSRF", text: "CSRF<p>(为空时:登录哔哩哔哩自动获取)</p>" },
+        input: {
+          type: "text", id: "options_CSRF", inputPlaceholder: "CSRF值",
+        }
+      },
+      {
+        additionalElement: [
+          `<div class="alert alert-warning" role="alert">如果你不希望程序自动获取cookie,请随便填写内容或填写准备好的SESSDATA,CSRF。</div>`
+        ]
+      },
+    ];
+    const BaiJiaHaoBedCustomFormGroup = [
+      {
+        additionalElement: [
+          `<div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">百家号接口</h4>
+            <p>使用,请保持百度登录</p>
+            <hr>
+            <p class="mb-0">` + chrome.i18n.getMessage("Telegra_ph_3") + `</p>
+          </div>`
+        ]
+      },
+    ];
+    const freebufBedCustomFormGroup = [
+      {
+        additionalElement: [
+          `<div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">freebuf接口</h4>
+            <p>无需配置,保存即可使用</p>
+            <hr>
+            <p class="mb-0">`+ chrome.i18n.getMessage("Telegra_ph_3") + `</p>
+          </div>`
+        ]
+      },
+    ];
+    const toutiaoBedCustomFormGroup = [
+      {
+        additionalElement: [
+          `<div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">今日头条接口</h4>
+            <p>无需配置,保存即可使用</p>
+            <hr>
+            <p class="mb-0">`+ chrome.i18n.getMessage("Telegra_ph_3") + `</p>
+          </div>`
+        ]
+      },
+    ];
+    const toutiaoBed2CustomFormGroup = [
+      {
+        additionalElement: [
+          `<div class="alert alert-danger" role="alert">今日头条2接口上传完全依赖后端上传,请部署后端服务!</div>`
+        ]
+      },
+      {
+        label: { class: "options_apihost", text: "后端请求地址<p>(为空时使用默认后端)" },
+        input: {
+          type: "url", id: "options_apihost", inputPlaceholder: "无法携带cookie，填写完整url",
+        }
+      },
+      {
+        label: { class: "options_token", text: "SESSDATA<p>(为空时:登录今日头条自动获取)</p>" },
+        input: {
+          type: "text", id: "options_token", inputPlaceholder: "SESSDATA值",
+        }
+      },
+      {
+        label: { class: "options_CSRF", text: "CSRF<p>(为空时:登录今日头条自动获取)</p>" },
+        input: {
+          type: "text", id: "options_CSRF", inputPlaceholder: "CSRF值",
+        }
+      },
+      {
+        additionalElement: [
+          `<div class="alert alert-warning" role="alert">如果你不希望程序自动获取cookie,请随便填写内容或填写准备好的SESSDATA,CSRF。</div>`
+        ]
+      },
+    ];
 
 
     const html_exeCORSForm = `
@@ -418,7 +875,46 @@ $(document).ready(function () {
       <input type="url" class="form-control box-shadow" id="options_proxy_server" placeholder="` + chrome.i18n.getMessage("options_proxy_server_placeholder") + `" />
     </div>`
 
+    const cos_cors = `
+    <div class="CorsButton" id="Object_Storage_cors">
+      <button type="button" class="css-button-rounded--sky">` + chrome.i18n.getMessage("Object_Storage_cors_COS") + `</button>
+    </div>
+    `
+    const cos_putBucketACL = `
+    <div class="CorsButton" id="putBucketACL">
+      <button type="button" class="css-button-arrow--sky putBucketACL" data-bs-toggle="dropdown" aria-expanded="false">
+      ` + chrome.i18n.getMessage("putBucketACL") + `
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#" value="private"><i class="bi bi-incognito"></i>` + chrome.i18n.getMessage("putBucketACL_1") + `</a></li>
+        <li><a class="dropdown-item" href="#" value="public-read"><i class="bi bi-file-earmark-lock"></i>` + chrome.i18n.getMessage("putBucketACL_2") + `</a></li>
+        <li><a class="dropdown-item" href="#" value="public-read-write"><i class="bi bi-folder2-open"></i>` + chrome.i18n.getMessage("putBucketACL_3") + `</a></li>
+      </ul>
+    </div>
+  `
 
+    const oss_cors = ` 
+    <div class="CorsButton" id="Object_Storage_cors">
+      <button type="button" class="css-button-rounded--sky">` + chrome.i18n.getMessage("Object_Storage_cors_OSS") + `</button>
+    </div>
+    `
+    const oss_putBucketACL = `
+    <div class="CorsButton" id="putBucketACL">
+      <button type="button" class="css-button-arrow--sky putBucketACL" data-bs-toggle="dropdown" aria-expanded="false">
+      ` + chrome.i18n.getMessage("putBucketACL") + `
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#" value="private"><i class="bi bi-incognito"></i>` + chrome.i18n.getMessage("putBucketACL_1") + `</a></li>
+        <li><a class="dropdown-item" href="#" value="public-read"><i class="bi bi-file-earmark-lock"></i>` + chrome.i18n.getMessage("putBucketACL_2") + `</a></li>
+        <li><a class="dropdown-item" href="#" value="public-read-write"><i class="bi bi-folder2-open"></i>` + chrome.i18n.getMessage("putBucketACL_3") + `</a></li>
+      </ul>
+    </div>
+  `
+    const s3_cors = ` 
+    <div class="CorsButton" id="Object_Storage_cors">
+     <button type="button" class="css-button-rounded--sky">` + chrome.i18n.getMessage("Object_Storage_cors_S3") + `</button>
+    </div>
+    `
     const programConfig = {
       Lsky: {
         needUid: 1,
@@ -429,7 +925,57 @@ $(document).ready(function () {
           Getalbums()
         },
       },
-      
+      EasyImages: {
+        needUid: 2,
+        html: createFormGroups(EasyImagesCustomFormGroup),
+        config: ["options_host", "options_token"],
+        init: function () {
+        },
+      },
+      ImgURL: {
+        needUid: 3,
+        html: createFormGroups(ImgURLCustomFormGroup),
+        config: ["options_host", "options_token", "options_uid"],
+        init: function () {
+        },
+      },
+      SM_MS: {
+        needUid: 4,
+        html: createFormGroups(SM_MSCustomFormGroup),
+        config: ["options_token"],
+        init: function () {
+          $('#options_host').val("sm.ms")
+          $('#options_host').attr("disabled", true)
+        },
+      },
+      Chevereto: {
+        needUid: 5,
+        html: createFormGroups(CheveretoCustomFormGroup),
+        config: ["options_host", "options_token", "options_album_id", "options_expiration_select", "options_nsfw_select"],
+        init: function () {
+        },
+      },
+      Hellohao: {
+        needUid: 6,
+        html: createFormGroups(HellohaoCustomFormGroup),
+        config: ["options_host", "options_token", "options_source"],
+        init: function () {
+          $("#options_host").val(ProgramConfigurations.options_host);
+          $("#options_token").val(ProgramConfigurations.options_token);
+          $("#options_source").val(ProgramConfigurations.options_source);
+
+        },
+      },
+      Imgur: {
+        needUid: 7,
+        html: createFormGroups(ImgurCustomFormGroup),
+        config: ["options_token"],
+        init: function () {
+          $('#options_host').val("api.imgur.com")
+          $('#options_host').attr("disabled", true)
+          options_imgur_post_modeFn()
+        },
+      },
       UserDiy: {
         needUid: 8,
         html: createFormGroups(UserCustomFormGroup),
@@ -439,7 +985,113 @@ $(document).ready(function () {
           UserDiy_customSwitch()
         },
       },
-
+      Tencent_COS: {
+        needUid: 9,
+        html: createFormGroups(Tencent_COSCustomFormGroup),
+        config: ["options_SecretId", "options_SecretKey", "options_Bucket", "options_AppId", "options_Region", "options_UploadPath", "options_Custom_domain_name"],
+        init: function () {
+          $("#CorsButton").parent().append(cos_cors)
+          $("#CorsButton").parent().append(cos_putBucketACL)
+          setBucketACL()
+          setBucketCors()
+          if ($('#CorsButton button').is(".css-button-rounded--red")) {
+            Close_CORS_Element()
+          }
+        },
+      },
+      Aliyun_OSS: {
+        needUid: 10,
+        html: createFormGroups(Aliyun_OSSCustomFormGroup),
+        config: ["options_SecretId", "options_SecretKey", "options_Bucket", "options_Endpoint", "options_Region", "options_UploadPath", "options_Custom_domain_name"],
+        init: function () {
+          $("#CorsButton").parent().append(oss_cors)
+          $("#CorsButton").parent().append(oss_putBucketACL)
+          setBucketACL()
+          setBucketCors()
+          if ($('#CorsButton button').is(".css-button-rounded--red")) {
+            Close_CORS_Element()
+          }
+        },
+      },
+      AWS_S3: {
+        needUid: 11,
+        html: createFormGroups(AWS_S3CustomFormGroup),
+        config: ["options_SecretId", "options_SecretKey", "options_Bucket", "options_Region", "options_Endpoint", "options_UploadPath", "options_Custom_domain_name"],
+        init: function () {
+          $("#CorsButton").parent().append(s3_cors)
+          setBucketCors()
+          if ($('#CorsButton button').is(".css-button-rounded--red")) {
+            Close_CORS_Element()
+          }
+        },
+      },
+      GitHubUP: {
+        needUid: 12,
+        html: createFormGroups(GitHubUPCustomFormGroup),
+        config: ["options_owner", "options_repository", "options_UploadPath", "options_token"],
+        init: function () {
+        },
+      },
+      Telegra_ph: {
+        needUid: 13,
+        html: createFormGroups(Telegra_phCustomFormGroup),
+        config: ["options_Custom_domain_name"],
+        init: function () {
+          $("#options_Custom_domain_name").val(ProgramConfigurations.options_Custom_domain_name);
+        },
+      },
+      imgdd: {
+        needUid: 14,
+        html: createFormGroups(imgddCustomFormGroup),
+        init: function () {
+          $('#options_host').val("imgdd.com")
+          $('#options_host').attr("disabled", true)
+        },
+      },
+      fiftyEight: {
+        needUid: 15,
+        html: createFormGroups(fiftyEightCustomFormGroup),
+        init: function () {
+          // 默认初始化代码
+        },
+      },
+      BilibliBed: {
+        needUid: 16,
+        html: createFormGroups(BilibliBedCustomFormGroup),
+        config: ["options_token", "options_CSRF"],
+        init: function () {
+          $("#options_token").val(ProgramConfigurations.options_token);
+          $("#options_CSRF").val(ProgramConfigurations.options_CSRF);
+        },
+      },
+      BaiJiaHaoBed: {
+        needUid: 17,
+        html: createFormGroups(BaiJiaHaoBedCustomFormGroup),
+        init: function () {
+          // 默认初始化代码
+        },
+      },
+      freebufBed: {
+        needUid: 18,
+        html: createFormGroups(freebufBedCustomFormGroup),
+        init: function () {
+          // 默认初始化代码
+        },
+      },
+      toutiaoBed: {
+        needUid: 19,
+        html: createFormGroups(toutiaoBedCustomFormGroup),
+        init: function () {
+          // 默认初始化代码
+        },
+      },
+      toutiaoBed2: {
+        needUid: 20,
+        html: createFormGroups(toutiaoBed2CustomFormGroup),
+        init: function () {
+          // 默认初始化代码
+        },
+      },
       default: {
         html: `
           <div class="alert alert-secondary" role="alert">
@@ -520,7 +1172,6 @@ $(document).ready(function () {
       $("#options_exe button").removeClass('active');
       prog.init();
       $(`#options_exe button[value=${programId}]`).addClass("active");
-
       $('#options-form').hide().slideDown('slow');
       $(".options-form input[name='requestMethod'][value='" + ProgramConfigurations.requestMethod + "']").prop('checked', true);
       $('textarea').on('input', function () {
@@ -558,11 +1209,296 @@ $(document).ready(function () {
 
     }
     initializeProgramOptions(ProgramConfigurations.options_exe)
+    $(`#options_exe button[value=${ProgramConfigurations.options_exe}] span`).addClass("selected");
     // 按钮点击事件委托
     $('#options_exe button').on('click', function () {
       const progId = $(this).attr("id").replace("exe_", "");
       initializeProgramOptions(progId);
     });
+    function setBucketCors() {
+      $("#Object_Storage_cors").click(function () {
+        switch (ProgramConfigurations.options_exe) {
+          case 'Tencent_COS':
+            if ($('#exe_Tencent_COS').hasClass('active')) {
+              setCosBucketCors();
+            } else {
+              disableCorsButton();
+            }
+            break;
+          case 'Aliyun_OSS':
+            if ($('#exe_Aliyun_OSS').hasClass('active')) {
+              setOssBucketCors();
+            } else {
+              disableCorsButton();
+            }
+            break;
+          case 'AWS_S3':
+            if ($('#exe_AWS_S3').hasClass('active')) {
+              setS3BucketCors();
+            } else {
+              disableCorsButton();
+            }
+            break;
+        }
+      });
+    }
+
+    function setCosBucketCors() {
+      function cos_putBucketCors() {
+        cos.putBucketCors({
+          Bucket: ProgramConfigurations.options_Bucket,
+          Region: ProgramConfigurations.options_Region,
+          CORSRules: [{
+            "AllowedOrigin": ["*"],
+            "AllowedMethod": ["GET", "POST", "PUT", "DELETE"],
+            "AllowedHeader": ["*"],
+            "ExposeHeader": ["ETag", "x-cos-acl", "x-cos-version-id", "x-cos-delete-marker", "x-cos-server-side-encryption"],
+            "MaxAgeSeconds": "300"
+          }]
+        }, function (err, data) {
+          if (data) {
+            toastItem({
+              toast_content: chrome.i18n.getMessage("Setting_successful_1"),
+              toast_DestroyTime: '15000'
+            })
+            $("#Object_Storage_cors button").attr("disabled", 'true')
+          }
+          if (err) {
+            console.error(err)
+            toastItem({
+              toast_content: chrome.i18n.getMessage("Setting_failed_1")
+            })
+            $("#Object_Storage_cors button").attr("disabled", 'false')
+          }
+        });
+      }
+      cos.getBucketCors({
+        Bucket: ProgramConfigurations.options_Bucket, /* 必须 */
+        Region: ProgramConfigurations.options_Region,     /* 存储桶所在地域，必须字段 */
+      }, function (err, data) {
+        console.log(err || data);
+        if (data) {
+          $("#Object_Storage_cors button").attr("disabled", 'true')
+          if (data.CORSRules.length < 1) {
+            cos_putBucketCors()
+          } else {
+            if (data.CORSRules[0].AllowedOrigins == "*" && data.CORSRules[0].AllowedHeaders == "*") {
+              toastItem({
+                toast_content: chrome.i18n.getMessage("Setting_successful_2")
+              })
+              return;
+            } else {
+              cos_putBucketCors()
+            }
+          }
+        }
+        if (err) {
+          $("#Object_Storage_cors button").attr("disabled", 'false')
+          toastItem({
+            toast_content: chrome.i18n.getMessage("Setting_failed_1")
+          })
+        }
+      });
+    }
+
+    function setOssBucketCors() {
+      function oss_putBucketCors() {
+        oss.putBucketCORS(ProgramConfigurations.options_Bucket, [{
+          allowedOrigin: '*',
+          allowedMethod: ["GET", "POST", "PUT", "DELETE"],
+          allowedHeader: '*',
+          exposeHeader: ["ETag", 'Content-Length', "x-oss-request-id"],
+          maxAgeSeconds: '300'
+        }]).then((res) => {
+          toastItem({
+            toast_content: chrome.i18n.getMessage("Setting_successful_4"),
+            toast_DestroyTime: '15000'
+          })
+          $("#Object_Storage_cors").attr("disabled", 'true')
+        }).catch(error => {
+          console.error(error)
+          toastItem({
+            toast_content: chrome.i18n.getMessage("Setting_failed_1")
+          })
+          $("#Object_Storage_cors").attr("disabled", 'false')
+        });
+      }
+      oss.getBucketCORS(ProgramConfigurations.options_Bucket).then((res) => {
+        if (res.rules[0].allowedOrigin == "*" && res.rules[0].allowedHeader == "*") {
+          toastItem({
+            toast_content: chrome.i18n.getMessage("Setting_successful_2")
+          })
+          return;
+        } else {
+          oss_putBucketCors()
+        }
+      }).catch(error => {
+        oss_putBucketCors()
+      });
+    }
+
+    function setS3BucketCors() {
+      function s3_putBucketCors() {
+        s3.putBucketCors({
+          Bucket: ProgramConfigurations.options_Bucket,
+          CORSConfiguration: {
+            CORSRules: [
+              {
+                AllowedHeaders: [
+                  "*"
+                ],
+                AllowedMethods: [
+                  "GET",
+                  "POST",
+                  "PUT",
+                  "DELETE"
+                ],
+                AllowedOrigins: [
+                  "*"
+                ],
+                ExposeHeaders: [
+                  "ETag",
+                  "x-amz-server-side-encryption",
+                  "x-amz-request-id",
+                  "x-amz-id-2"
+                ],
+                MaxAgeSeconds: 300
+              }
+            ]
+          }
+        }, function (err, data) {
+          if (data) {
+            toastItem({
+              toast_content: chrome.i18n.getMessage("Setting_successful_5"),
+              toast_DestroyTime: '15000'
+            })
+            $("#Object_Storage_cors button").attr("disabled", 'true')
+          }
+          if (err) {
+            console.error(err)
+            toastItem({
+              toast_content: chrome.i18n.getMessage("Setting_failed_1")
+            })
+            $("#Object_Storage_cors button").attr("disabled", 'false')
+          }
+        });
+      }
+      s3.getBucketCors({ Bucket: ProgramConfigurations.options_Bucket }, function (err, data) {
+        if (err) {
+          let not = err.toString().indexOf("The CORS configuration does not exist")
+          if (not != -1) {
+            s3_putBucketCors()
+          }
+        }
+        if (data) {
+          $("#Object_Storage_cors button").attr("disabled", 'true')
+          if (data.CORSRules[0].AllowedOrigins == "*" && data.CORSRules[0].AllowedHeaders == "*") {
+            toastItem({
+              toast_content: chrome.i18n.getMessage("Setting_successful_2")
+            })
+            return;
+          } else {
+            s3_putBucketCors()
+          }
+        }
+      });
+    }
+
+    function disableCorsButton() {
+      $("#Object_Storage_cors button").attr("disabled", 'true');
+      toastItem({
+        toast_content: chrome.i18n.getMessage("Setting_successful_3")
+      });
+    }
+
+    function setBucketACL() {
+      $("#putBucketACL .putBucketACL").click(function () {
+        $('#putBucketACL li').addClass("list-group-item disabled");
+        $('#putBucketACL li').attr("aria-disabled", true)
+        switch (ProgramConfigurations.options_exe) {
+          case 'Tencent_COS':
+            if ($('#exe_Tencent_COS').hasClass('active')) {
+              async function cos_getBucketAcl() {
+                try {
+                  const result = await cos.getBucketAcl({ Bucket: ProgramConfigurations.options_Bucket, Region: ProgramConfigurations.options_Region });
+                  $('#putBucketACL a[value="' + result.ACL + '"]').addClass('active');
+                  $('#putBucketACL li').removeClass("disabled")
+                  $('#putBucketACL li').attr("aria-disabled", false)
+
+                } catch (error) {
+                  console.log(error)
+                  toastItem({
+                    toast_content: chrome.i18n.getMessage("Setting_failed_1")
+                  })
+                }
+              }
+              cos_getBucketAcl()
+            } else {
+              $('#putBucketACL button').attr("disabled", true)
+              $('#putBucketACL ul').removeClass("show")
+              toastItem({
+                toast_content: chrome.i18n.getMessage("Setting_successful_3")
+              });
+            }
+            break;
+          case 'Aliyun_OSS':
+            if ($('#exe_Aliyun_OSS').hasClass('active')) {
+              async function oss_getBucketAcl() {
+                try {
+                  const result = await oss.getBucketACL(ProgramConfigurations.options_Bucket)
+                  $('#putBucketACL a[value="' + result.acl + '"]').addClass('active');
+                  $('#putBucketACL li').removeClass("disabled")
+                  $('#putBucketACL li').attr("aria-disabled", false)
+                } catch (error) {
+                  console.log(error)
+                  toastItem({
+                    toast_content: chrome.i18n.getMessage("Setting_successful_1")
+                  })
+                }
+              }
+              oss_getBucketAcl()
+            } else {
+              $('#putBucketACL button').attr("disabled", true)
+              $('#putBucketACL ul').removeClass("show")
+              toastItem({
+                toast_content: chrome.i18n.getMessage("Setting_successful_3")
+              });
+            }
+            break;
+        }
+
+      })
+      $("#putBucketACL .dropdown-item").click(function () {
+        const acl = $(this).attr("value");
+        switch (ProgramConfigurations.options_exe) {
+          case 'Tencent_COS':
+            async function cos_putBucketACL() {
+              try {
+                await cos.putBucketAcl({ Bucket: ProgramConfigurations.options_Bucket, Region: ProgramConfigurations.options_Region, ACL: acl });
+                $('#putBucketACL a').removeClass('active');
+                $('#putBucketACL a[value="' + acl + '"]').addClass('active');
+              } catch (error) {
+                console.log(error)
+              }
+            }
+            cos_putBucketACL()
+            break;
+          case 'Aliyun_OSS':
+            async function oss_putBucketACL() {
+              // 此处以创建存储空间后修改其访问权限为private为例。
+              try {
+                await oss.putBucketACL(ProgramConfigurations.options_Bucket, acl)
+                $('#putBucketACL a').removeClass('active');
+                $('#putBucketACL a[value="' + acl + '"]').addClass('active');
+              } catch (error) {
+                console.log(error)
+              }
+            }
+            oss_putBucketACL()
+            break;
+        }
+      });
+    }
 
 
     /**
@@ -665,7 +1601,34 @@ $(document).ready(function () {
 
       }
     }
+    /**
+     * 实现imgur上传方式如图片还是视频
+     */
+    function options_imgur_post_modeFn() {
+      $('#options_imgur_post_mode').click(function () {
+        if ($('#options_imgur_post_mode').is(':checked')) {
+          storProgramConfiguration({ 'options_imgur_post_mode': 1 })
+          // 开启
+          toastItem({
+            toast_content: chrome.i18n.getMessage("Video_upload_mode"),
+          })
 
+        } else {
+          storProgramConfiguration({ 'options_imgur_post_mode': 0 })
+          // 关闭
+          toastItem({
+            toast_content: chrome.i18n.getMessage("Image_upload_mode"),
+          })
+        }
+      });
+
+      // 判断模式
+      chrome.storage.local.get(["options_imgur_post_mode"], function (result) {
+        if (result.options_imgur_post_mode == 1) {
+          $('#options_imgur_post_mode').attr('checked', true);
+        }
+      })
+    }
     // 保存配置
     $("#options-form").submit(function (event) {
       event.preventDefault(); // 阻止表单的默认提交行为
@@ -735,10 +1698,27 @@ $(document).ready(function () {
             FormData['options_token'] = `Bearer ` + string
           }
         }
+        if ($('#exe_Imgur').hasClass('active')) {
+          FormData['options_imgur_post_mode'] = $('#options_imgur_post_mode').is(':checked')
+        }
         if ($('#exe_UserDiy').hasClass('active')) {
           FormData['options_host'] = $("#options_apihost").val()
         }
-
+        if ($('#exe_fiftyEight').hasClass('active')) {
+          FormData['options_host'] = "cn.58.com"
+        }
+        // if ($('#exe_BilibliBed').hasClass('active')) {
+        //   chrome.runtime.sendMessage({ exe_BilibliBed: "save" });
+        // }
+        if ($('#exe_BaiJiaHaoBed').hasClass('active')) {
+          FormData['options_host'] = "baijiahao.baidu.com"
+        }
+        if ($('#exe_freebufBed').hasClass('active')) {
+          FormData['options_host'] = "www.freebuf.com"
+        }
+        if ($('#exe_toutiaoBed').hasClass('active') || $('#exe_toutiaoBed2').hasClass('active')) {
+          FormData['options_host'] = "www.toutiao.com"
+        }
         localStorage.options_webtitle_status = 1
         toastItem({
           toast_content: chrome.i18n.getMessage("Successfully_saved_1")
@@ -746,9 +1726,6 @@ $(document).ready(function () {
         FormData["options_exe"] = optionsExe.attr("value")
         storProgramConfiguration(FormData)
         storeBedConfig(FormData);
-        setTimeout(function () {
-          window.location.reload();
-        }, 1000); // 延迟 1.5 秒（1500 毫秒）
       } else {
         toastItem({
           toast_content: chrome.i18n.getMessage("select_upload_program")
@@ -766,31 +1743,56 @@ $(document).ready(function () {
 
       return sortedObj;
     }
-
     function storeBedConfig(data) {
-      let num = 50;
       const sortedData = sortObjectProperties(data);
-      const BedSyncStorage = (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.sync) ? chrome.storage.sync : (typeof browser !== 'undefined' && browser.storage && browser.storage.sync) ? browser.storage.sync : null;
-      if (BedSyncStorage) {
-        BedSyncStorage.get("BedConfig").then(result => {
-          let BedConfig = result.BedConfig || [];
-          if (!BedConfig.some(existingData => isSameData(existingData, sortedData))) {
-            data["ConfigName"] = chrome.i18n.getMessage("Config") + BedConfig.length;
-            data["ConfigTime"] = new Date().getTime();
-            BedConfig.push(data);
-            if (BedConfig.length >= num) {
-              BedConfig.shift();
-            }
-            BedSyncStorage.set({ "BedConfig": BedConfig });
+      dbHelper("BedConfigStore").then(result => {
+        // 处理获取到的配置数据
+        const { db } = result;
+        db.getAll().then(BedConfig => {
+          let existingData = BedConfig.find(existingData => isSameData(existingData.data, sortedData));
+          if (existingData) {
+            // 找到相同数据，更新它
+            existingData.data = sortedData; // 或者根据需要更新其他属性
+            db.put(existingData).then(() => {
+              console.log("Data updated successfully");
+            }).catch(error => {
+              console.error("Error in updating data:", error);
+            });
+          } else {
+            // 没有相同数据，添加新的数据项
+            const uniqueId = generateUniqueId();
+            const configData = {
+              id: uniqueId,
+              data: sortedData,
+              ConfigName: chrome.i18n.getMessage("Config") + BedConfig.length,
+            };
+            db.put(configData).then(() => {
+              console.log("Data added successfully with ID:", uniqueId);
+            }).catch(error => {
+              console.error("Error in adding data:", error);
+            });
           }
-        });
-      } else {
-        $(".Config-Box-Log-content").html(`<p class="text-center">该浏览器不支持此功能</p>`)
-      }
+          setTimeout(function () {
+            window.location.reload();
+          }, 1500); // 延迟 1.5 秒（1500 毫秒）
+        })
+
+      }).catch(error => {
+        console.error("Error opening database:", error);
+        $(".Config-Box-Log-content").html(`<p class="text-center">该浏览器不支持此功能</p>`);
+      });
+    }
+
+    //延迟1秒
+
+
+    function generateUniqueId() {
+      return crypto.randomUUID();
     }
 
     function isSameData(data1, data2) {
-      const excludedProps = ['ConfigName', 'ConfigTime'];
+      //非常重要，判断是否相同
+      const excludedProps = ['ConfigName'];
       for (const key of Object.keys(data2)) {
         if (!excludedProps.includes(key) && data1[key] !== data2[key]) {
           return false;
@@ -798,85 +1800,218 @@ $(document).ready(function () {
       }
       return true;
     }
+    async function readBedConfig() {
+      unregisterDragSortEvents(); //注销绑定监听
 
-    async function readBedConfig(keys = null) {
-      //BedSyncStorage 账号存储
-      //BedLocalStorage 本地存储
-      const BedSyncStorage = (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.sync) ? chrome.storage.sync : (typeof browser !== 'undefined' && browser.storage && browser.storage.sync) ? browser.storage.sync : null;
-      const BedLocalStorage = (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) ? chrome.storage.local : (typeof browser !== 'undefined' && browser.storage && browser.storage.local) ? browser.storage.local : null;
-
-      if (BedSyncStorage) {
-        try {
-          const result = await BedSyncStorage.get(keys);
-          const bedConfig = result.BedConfig || [];
-          $(".Config-Box-Log-content").empty();
-          attachImportButtonHandler(keys); //导入
-          if (bedConfig.length === 0) {
+      dbHelper("BedConfigStore").then(result => {
+        const { db } = result;
+        $(".Config-Box-Log-content").empty();
+        attachImportButtonHandler(db); // 导入
+        db.getSortedByIndex().then(BedConfig => {
+          if (BedConfig.length === 0) {
             $(".Config-Box-Log-content").html(`
-                       <div class="Config-Box-Log-item">
-                         <div class="BedConfigName"><span>No Data</span></div>
-                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                           <span class="BedConfigAdd button"><i class="bi bi-plus-circle"></i></span>
-                           <span class="BedConfigDel button"><i class="bi bi-x-circle"></i></span>
-                         </div>
-                       </div> 
-            `);
+                    <div class="Config-Box-Log-item">
+                        <div class="BedConfigName"><span>No Data</span></div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="BedConfigAdd button"><i class="bi bi-plus-circle"></i></span>
+                            <span class="BedConfigDel button"><i class="bi bi-x-circle"></i></span>
+                        </div>
+                    </div> 
+                `);
             return;
           }
-          bedConfig.forEach((e, index) => {
+          BedConfig.forEach((e, index) => {
             const item = createConfigItem(e, index);
             $(".Config-Box-Log-content").append(item);
-            attachEventHandlers(item, e, keys, index);
+            attachEventHandlers(item, e, db);
           });
+          attachShareButtonHandler(BedConfig);
+          DragSort(BedConfig, db); //拖拽api
+        });
 
-          attachShareButtonHandler(keys);
-          DragSort(bedConfig)
-        } catch (error) {
-          console.error("发生错误：", error);
-        }
-      } else {
+      }).catch(error => {
+        console.error(error);
         $(".Config-Box-Log-content").html(`<p class="text-center">该浏览器不支持此功能</p>`);
-      }
-      function createConfigItem(data, index) {
-        const item = $(`
+      });
+    }
+    /**
+     * 注销所有监控，防止重复加载
+     */
+    function unregisterDragSortEvents() {
+      $('.Config-Box-Log-content').off('dragstart dragenter dragover dragend');
+      $(".BedConfigAdd").off("click");
+      $(".BedConfigShare").off("click");
+      $(".BedConfigDel").off("click");
+      $(".BedConfigName span").off("dblclick");
+      $(".Config-Box-Log-footer .share-button").off("click"); //分享配置
+      $("#ImportConfigurationPopup .replace").off("click");
+      $("#ImportConfigurationPopup .append").off("click");
+    }
+    /**
+     * 配置项元素
+     */
+    function createConfigItem(data, index) {
+      const item = $(`
           <div class="Config-Box-Log-item" data-index="${index}"  draggable="true">
-            <div class="BedConfigName" title="${data.options_exe}">
+            <div class="BedConfigName" title="${data.data.options_exe}">
               <span data-old-value="${data.ConfigName}" title="` + chrome.i18n.getMessage("DoubleClickToEdit") + `">${data.ConfigName}</span>
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-              <button type="button" class="BedConfigAdd button" title="`+ chrome.i18n.getMessage("Load") + `:[${data.ConfigName}|${data.options_exe}]">
+              <button type="button" class="BedConfigAdd button" title="`+ chrome.i18n.getMessage("Load") + `:[${data.ConfigName}|${data.data.options_exe}]">
                 <i class="bi bi-plus-circle"></i>
               </button>
-              <button type="button" class="BedConfigShare button" title="`+ chrome.i18n.getMessage("share") + `:[${data.ConfigName}|${data.options_exe}]">
+              <button type="button" class="BedConfigShare button" title="`+ chrome.i18n.getMessage("share") + `:[${data.ConfigName}|${data.data.options_exe}]">
                 <i class="bi bi-send"></i>
               </button>
-              <button type="button" class="BedConfigDel button" title="`+ chrome.i18n.getMessage("Delete") + `:[${data.ConfigName}|${data.options_exe}]">
+              <button type="button" class="BedConfigDel button" title="`+ chrome.i18n.getMessage("Delete") + `:[${data.ConfigName}|${data.data.options_exe}]">
                 <i class="bi bi-x-circle"></i>
               </button>
             </div>
           </div>
         `);
-        return item;
-      }
+      return item;
+    }
+    /**
+     * 配置项元素按钮方法
+     */
+    function attachEventHandlers(item, data, db) {
+      // 获取配置项中的各个按钮元素
+      const addBtn = item.find(".BedConfigAdd");
+      const shareBtn = item.find(".BedConfigShare");
+      const delBtn = item.find(".BedConfigDel");
+      const nameSpan = item.find(".BedConfigName span");
 
-      function attachEventHandlers(item, data, keys, index) {
-        // 获取配置项中的各个按钮元素
-        const addBtn = item.find(".BedConfigAdd");
-        const shareBtn = item.find(".BedConfigShare");
-        const delBtn = item.find(".BedConfigDel");
-        const nameSpan = item.find(".BedConfigName span");
+      // 为加载按钮添加点击事件处理程序
+      addBtn.click(function () {
+        $(this).prop('disabled', true);
+        storProgramConfiguration(data.data)
+          .then(() => {
+            toastItem({
+              toast_content: chrome.i18n.getMessage("Load") + chrome.i18n.getMessage("successful")
+            });
+            setTimeout(function () {
+              window.location.reload();
+            }, 1000); // 延迟
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
 
-        // 为加载按钮添加点击事件处理程序
-        addBtn.click(function () {
-          $(this).prop('disabled', true);
-          BedSyncStorage.get(keys).then(data => {
-            const dataIndex = addBtn.parent().parent().data("index");
-            if (dataIndex !== undefined) {
-              const selectedData = data.BedConfig[dataIndex];
-              const dataWithoutConfig = { ...selectedData };
-              delete dataWithoutConfig.ConfigName;
-              delete dataWithoutConfig.ConfigTime;
-              storProgramConfiguration(dataWithoutConfig)
+      // 为分享按钮添加点击事件处理程序
+      shareBtn.click(function () {
+        $(this).prop('disabled', true);
+        const newData = { ...data } //复制对象
+        delete newData.id
+        delete newData.index
+        const textarea = document.createElement("textarea");
+        textarea.value = JSON.stringify(newData);
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        toastItem({
+          toast_content: chrome.i18n.getMessage("SharePrompt1")
+        });
+        setTimeout(function () {
+          shareBtn.prop('disabled', false);
+        }, 1000); // 延迟
+      });
+
+      // 为删除按钮添加点击事件处理程序
+      delBtn.click(function () {
+        $(this).prop('disabled', true);
+        db.delete(data.id).then(() => {
+          $(this).parent().parent().remove();
+          toastItem({
+            toast_content: chrome.i18n.getMessage("Delete_successful")
+          });
+
+          if ($(this).parent().parent().parent().find(".Config-Box-Log-item").length < 1) {
+            return readBedConfig();
+          }
+        }).catch(error => {
+          toastItem({
+            toast_content: "好像删除失败了,打开开发者工具查看错误原因"
+          });
+          console.log(error);
+        });
+      });
+
+      // 为配置项名称添加双击事件处理程序
+      nameSpan.dblclick(function () {
+        const oldValue = $(this).data("old-value");
+        const newValue = prompt(chrome.i18n.getMessage("EnterConfigurationName") + ":", oldValue);
+        if (newValue !== null && newValue !== "") {
+          $(this).text(newValue);
+          $(this).data("old-value", newValue);
+          data.ConfigName = newValue;
+          db.put(data).then(() => {
+            toastItem({
+              toast_content: chrome.i18n.getMessage("Save") + chrome.i18n.getMessage("successful")
+            });
+          });
+        }
+      });
+    }
+    /**
+     * 分享按钮方法
+     */
+    function attachShareButtonHandler(BedConfig) {
+      $(".Config-Box-Log-footer .share-button").click(function () {
+        const modifiedBedConfig = BedConfig.map(({ id, index, ...rest }) => rest);
+        const textarea = document.createElement("textarea");
+        textarea.value = JSON.stringify(modifiedBedConfig);
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        toastItem({
+          toast_content: chrome.i18n.getMessage("SharePrompt1")
+        });
+      });
+    }
+    /**
+     * 导入配置 内容判定
+     */
+    function parseJsonInput(inputValue) {
+      return new Promise((resolve, reject) => {
+        if (!inputValue || inputValue.trim() == "") {
+          return reject("导入配置:输入内容为空");
+        }
+        try {
+          // 检查是否需要将输入包裹在数组中
+          if (inputValue.trim().startsWith('{') && inputValue.trim().endsWith('}')) {
+            inputValue = '[' + inputValue + ']';
+          }
+          // 尝试将字符串解析为JSON
+          let jsonArray = JSON.parse(inputValue);
+          // 检测解析后的值是否为数组或对象
+          if (Array.isArray(jsonArray) || (typeof jsonArray === 'object' && jsonArray !== null)) {
+            if (jsonArray.length === 0) { return; }
+            let newArray = []
+            for (const item of jsonArray) {
+              if (Object.keys(item).length === 0) {
+                continue;
+              }
+              if (!item.data) {
+                const newItem = { ...item }
+                delete newItem.ConfigName
+                delete newItem.ConfigTime
+                newArray.push({
+                  id: generateUniqueId(),
+                  data: newItem,
+                  ConfigName: item.ConfigName || chrome.i18n.getMessage("Config"),
+                });
+
+              } else {
+                newArray.push({ ...item, id: generateUniqueId() });
+              }
+
+            }
+            resolve(newArray)
+            if (newArray.length === 1) {
+              storProgramConfiguration(newArray[0].data)
                 .then(() => {
                   toastItem({
                     toast_content: chrome.i18n.getMessage("Load") + chrome.i18n.getMessage("successful")
@@ -885,245 +2020,148 @@ $(document).ready(function () {
                   setTimeout(function () {
                     window.location.reload();
                   }, 1000); // 延迟
-                })
-                .catch((error) => {
-                  console.log(error);
                 });
             }
-          });
-        });
-
-        // 为分享按钮添加点击事件处理程序
-        shareBtn.click(function () {
-          $(this).prop('disabled', true);
-          BedSyncStorage.get(keys).then(data => {
-            const dataIndex = shareBtn.parent().parent().data("index");
-            if (dataIndex !== undefined) {
-              const selectedData = data.BedConfig[dataIndex];
-              const textarea = document.createElement("textarea");
-              textarea.value = JSON.stringify(selectedData);
-              document.body.appendChild(textarea);
-              textarea.select();
-              document.execCommand("copy");
-              document.body.removeChild(textarea);
-              toastItem({
-                toast_content: chrome.i18n.getMessage("SharePrompt1")
-              });
-              setTimeout(function () {
-                shareBtn.prop('disabled', false);
-              }, 1000); // 延迟
-            }
-          });
-        });
-
-        // 为删除按钮添加点击事件处理程序
-        delBtn.click(function () {
-          $(this).prop('disabled', true);
-          BedSyncStorage.get(keys).then(data => {
-            const dataIndex = delBtn.parent().parent().index();
-            if (dataIndex !== undefined) {
-              if (data.BedConfig && data.BedConfig[dataIndex]) {
-                data.BedConfig.splice(dataIndex, 1); // 删除指定索引的元素
-              }
-              BedSyncStorage.set({ "BedConfig": data.BedConfig }).then(() => {
-                $(this).parent().parent().remove();
-                toastItem({
-                  toast_content: chrome.i18n.getMessage("Delete_successful")
-                });
-                if (data.BedConfig.length < 1) {
-                  return readBedConfig();
-                }
-              });
-            }
-          });
-        });
-
-        // 为配置项名称添加双击事件处理程序
-        nameSpan.dblclick(function () {
-          const oldValue = $(this).data("old-value");
-          const newValue = prompt(chrome.i18n.getMessage("EnterConfigurationName") + ":", oldValue);
-          if (newValue !== null && newValue !== "") {
-            $(this).text(newValue);
-            $(this).data("old-value", newValue);
-            BedSyncStorage.get(keys).then(data => {
-              const updatedBedConfig = data.BedConfig.map(existingData => {
-                if (existingData.ConfigName === oldValue) {
-                  existingData.ConfigName = newValue;
-                }
-                return existingData;
-              });
-              BedSyncStorage.set({ "BedConfig": updatedBedConfig });
-            });
+          } else {
+            reject("导入配置:无法处理数据,请查看报错!");
           }
-        });
-      }
-
-      function attachShareButtonHandler(keys) {
-        $(".Config-Box-Log-footer .share-button").click(function () {
-          BedSyncStorage.get(keys).then(data => {
-            const textarea = document.createElement("textarea");
-            textarea.value = JSON.stringify(data.BedConfig);
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textarea);
-            toastItem({
-              toast_content: chrome.i18n.getMessage("SharePrompt1")
-            });
-          });
-        })
-      }
-
-      function attachImportButtonHandler(keys) {
-        $(".Config-Box-Log-footer .import-button").hover(function () {
-          if (!$("#ImportConfigurationPopup").length) {
-            let item = $(`
-                        <div class="modal fade" id="ImportConfigurationPopup" tabindex="-1" aria-labelledby="ImportConfigurationPopupLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="ImportConfigurationPopupLabel">`+ chrome.i18n.getMessage("ImportConfiguration") + `</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        } catch (error) {
+          console.error(error);
+          reject("导入配置:转换或者数据处理过程中出错了,详细错误请查看开发者工具(F12)!");
+        }
+      })
+    }
+    /**
+    * 导入配置按钮方法
+    */
+    function attachImportButtonHandler(db) {
+      let item = $("#ImportConfigurationPopup");
+      if (!$("#ImportConfigurationPopup").length) {
+        item = $(`
+                      <div class="modal fade" id="ImportConfigurationPopup" tabindex="-1" aria-labelledby="ImportConfigurationPopupLabel"
+                      aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ImportConfigurationPopupLabel">`+ chrome.i18n.getMessage("ImportConfiguration") + `</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="form-floating">
+                              <textarea class="form-control" placeholder="配置信息" id="floatingTextarea"></textarea>
+                              <label for="floatingTextarea">多段数据使用,分割!</label>
                             </div>
-                            <div class="modal-body">
-                              <div class="form-floating">
-                                <textarea class="form-control" placeholder="配置信息" id="floatingTextarea"></textarea>
-                                <label for="floatingTextarea">多段数据使用,分割!</label>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">`+ chrome.i18n.getMessage("close") + `</button>
-                              <button type="button" class="btn btn-primary replace" data-i18n="replace">`+ chrome.i18n.getMessage("replace") + `</button>
-                              <button type="button" class="btn btn-primary append" data-i18n="append">`+ chrome.i18n.getMessage("append") + `</button>
-                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal">`+ chrome.i18n.getMessage("close") + `</button>
+                            <button type="button" class="btn btn-primary replace" data-i18n="replace">`+ chrome.i18n.getMessage("replace") + `</button>
+                            <button type="button" class="btn btn-primary append" data-i18n="append">`+ chrome.i18n.getMessage("append") + `</button>
                           </div>
                         </div>
                       </div>
-                        `)
-            $("body").append(item)
+                    </div>
+                      `)
+        $("body").append(item)
+      }
+      item.find(".append").click(function () {
+        let value = item.find("#floatingTextarea").val();
+        parseJsonInput(value).then(newArray => {
+          db.add(newArray).then(() => {
+            item.find("#floatingTextarea").val("");
+            readBedConfig();
+          }).catch(error => {
+            console.error("Error replacing data:", error);
+          });
+        }).catch(error => {
+          toastItem({
+            toast_content: error
+          });
+          console.error(error);
+        });
 
-            item.find(".append").click(function () {
-              let value = item.find("#floatingTextarea").val();
-              try {
-                let jsonArray;
-                if (value.charAt(0) !== '[' && value.charAt(value.length - 1) !== ']') {
-                  jsonArray = JSON.parse("[" + value + "]");
-                } else {
-                  jsonArray = JSON.parse(value);
-                }
-                if (!Array.isArray(jsonArray)) {
-                  toastItem({
-                    toast_content: "输入数据不是有效的 JSON 数组!"
-                  });
-                  return;
-                }
-                BedSyncStorage.get(keys).then(data => {
-                  let BedConfig = data.BedConfig || [];
-                  if (jsonArray.length > 0) {
-                    for (let i = 0; i < jsonArray.length; i++) {
-                      BedConfig.push(jsonArray[i]);
-                    }
-                  }
-
-                  BedSyncStorage.set({ "BedConfig": BedConfig }).then(() => {
-                    item.find("#floatingTextarea").val("");
-                    readBedConfig();
-                  });
-                });
-              } catch (error) {
-                console.error("无法处理数据" + error);
-                toastItem({
-                  toast_content: "无法处理数据,请查看报错!"
-                });
-              }
+      });
+      item.find(".replace").click(function () {
+        let value = item.find("#floatingTextarea").val();
+        parseJsonInput(value).then(newArray => {
+          db.clear().then(() => {
+            db.add(newArray).then(() => {
+              item.find("#floatingTextarea").val("");
+              readBedConfig();
+            }).catch(error => {
+              console.error("Error replacing data:", error);
             });
-            item.find(".replace").click(function () {
-              let value = item.find("#floatingTextarea").val();
-              try {
-                let jsonArray;
-                if (value.charAt(0) !== '[' && value.charAt(value.length - 1) !== ']') {
-                  jsonArray = JSON.parse("[" + value + "]");
-                } else {
-                  jsonArray = JSON.parse(value);
-                }
-                if (!Array.isArray(jsonArray)) {
-                  toastItem({
-                    toast_content: "输入数据不是有效的 JSON 数组!"
-                  });
-                  return;
-                }
-                BedSyncStorage.set({ "BedConfig": jsonArray }).then(() => {
-                  item.find("#floatingTextarea").val("");
-                  readBedConfig();
-                });
-              } catch (error) {
-                console.error("无法处理数据" + error);
-                toastItem({
-                  toast_content: "无法处理数据,请查看报错!"
-                });
-              }
-            })
-          }
-        })
-      }
-      function DragSort(bedConfig) {
-        let list = $('.Config-Box-Log-content');
-        let currentLi;
-
-        // 当开始拖拽列表项时触发的事件处理函数
-        list.on('dragstart', '.Config-Box-Log-item', function (e) {
-          // 设置拖拽效果
-          e.originalEvent.dataTransfer.effectAllowed = 'move';
-          // 记录当前拖拽的列表项
-          currentLi = $(this);
-          setTimeout(() => {
-            currentLi.addClass('moving');
           });
-        });
-
-        // 当鼠标进入其他列表项时触发的事件处理函数
-        list.on('dragenter', '.Config-Box-Log-item', function (e) {
-          e.preventDefault();
-          if ($(this).is(currentLi)) {
-            return;
-          }
-          let liArray = list.find('.Config-Box-Log-item');
-          // 获取当前拖拽项的索引和目标项的索引
-          let currentIndex = liArray.index(currentLi);
-          let targetIndex = liArray.index($(this));
-
-          if (currentIndex < targetIndex) {
-            // 如果目标在当前项的下方，将当前项插入目标项的后面
-            $(this).after(currentLi);
-          } else {
-            // 如果目标在当前项的上方，将当前项插入目标项的前面
-            $(this).before(currentLi);
-          }
-        });
-        list.on('dragover', '.Config-Box-Log-item', function (e) {
-          e.preventDefault();
-        });
-        list.on('dragend', '.Config-Box-Log-item', function (e) {
-          currentLi.removeClass('moving');
-
-          // 获取已排序的 Config-Box-Log-item 元素的顺序
-          let sortedItems = list.find('.Config-Box-Log-item');
-          let newOrder = [];
-          sortedItems.each(function () {
-            newOrder.push($(this).data('index'));
+        }).catch(error => {
+          toastItem({
+            toast_content: error
           });
-
-          // 从 bedConfig 中重新排列数据
-          let rearrangedBedConfig = [];
-          newOrder.forEach(index => {
-            rearrangedBedConfig.push(bedConfig[index]);
-          });
-          BedSyncStorage.set({ "BedConfig": rearrangedBedConfig });
+          console.error(error);
         });
-      }
+
+      })
+    }
+    /**
+     * 配置项目拖拽方法
+     */
+    function DragSort(bedConfig, db) {
+      let list = $('.Config-Box-Log-content');
+      let currentLi;
+      // 当开始拖拽列表项时触发的事件处理函数
+      list.on('dragstart', '.Config-Box-Log-item', function (e) {
+        // 设置拖拽效果
+        e.originalEvent.dataTransfer.effectAllowed = 'move';
+        // 记录当前拖拽的列表项
+        currentLi = $(this);
+        setTimeout(() => {
+          currentLi.addClass('moving');
+        });
+      });
+
+      // 当鼠标进入其他列表项时触发的事件处理函数
+      list.on('dragenter', '.Config-Box-Log-item', function (e) {
+        e.preventDefault();
+        if ($(this).is(currentLi)) {
+          return;
+        }
+        let liArray = list.find('.Config-Box-Log-item');
+        // 获取当前拖拽项的索引和目标项的索引
+        let currentIndex = liArray.index(currentLi);
+        let targetIndex = liArray.index($(this));
+
+        if (currentIndex < targetIndex) {
+          // 如果目标在当前项的下方，将当前项插入目标项的后面
+          $(this).after(currentLi);
+        } else {
+          // 如果目标在当前项的上方，将当前项插入目标项的前面
+          $(this).before(currentLi);
+        }
+      });
+      list.on('dragover', '.Config-Box-Log-item', function (e) {
+        e.preventDefault();
+      });
+      list.on('dragend', '.Config-Box-Log-item', function (e) {
+        currentLi.removeClass('moving');
+        // 获取已排序的 Config-Box-Log-item 元素的顺序
+        let sortedItems = list.find('.Config-Box-Log-item');
+        let newOrder = [];
+        sortedItems.each(function () {
+          newOrder.push($(this).data('index'));
+        });
+
+        let rearrangedBedConfig = newOrder.map(index => {
+          let item = Object.assign({}, bedConfig[index]);
+          item.index = newOrder.indexOf(index);
+          return item;
+        });
+        db.put(rearrangedBedConfig).then(() => {
+        }).catch(error => {
+          console.error("Error updating data:", error);
+        });
+
+      });
 
     }
+
     readBedConfig();
     /**
      * 统一插入CORS元素
@@ -1576,7 +2614,11 @@ $(document).ready(function () {
           addToQueue(() => {
             chrome.storage.local.set({ "FuncDomain": FuncDomain }, function () {
               if (key === "Right_click_menu_upload") {
-                chrome.runtime.reload(); // 在保存完毕后执行刷新操作
+                //延迟一秒
+                setTimeout(function () {
+                  chrome.runtime.reload()
+                }, 500)
+                  ; // 在保存完毕后执行刷新操作
               }
             });
           });
@@ -1586,9 +2628,139 @@ $(document).ready(function () {
         });
       });
     });
+    $("#AutoInsert").hover(function () {
+      if (!$("#insertionModal").length) {
+        let item = $(`
+        <select id="insertTypeOptions" style="display:none;">
+        <option value="v2ex">v2ex</option>
+        <option value="nodeseek">nodeseek</option>
+        <option value="hostevaluate">hostevaluate</option>
+        <option value="lowendtalk">lowendtalk</option>
+
+        <option value="discuz">discuz</option>
+        <option value="halo">halo</option>
+        <option value="typecho">typecho</option>
+        <option value="phpbb">phpbb</option>
+   
+        <option value="codeMirror_5">codeMirror_5</option>
+        <option value="codeMirror_6">codeMirror_6</option>
+        <option value="gutenberg">gutenberg</option>
+        <option value="tinymce_5or6">tinymce_5or6</option>
+        <option value="wangeditor">wangeditor</option>
+        <option value="ckeditor_4">ckeditor_4</option>
+        <option value="ckeditor_5">ckeditor_5</option>
+        <option value="ckeditor_4or5">ckeditor_4or5</option>
+        <option value="ueditor">ueditor</option>
+
+        <option value="iframe">iframe</option>
+      </select>
+    
+      <div class="modal fade modal-lg" id="insertionModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">插入管理</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">域名</th>
+                    <th scope="col">插入类型</th>
+                    <th scope="col">操作</th>
+                  </tr>
+                </thead>
+    
+                <tbody id="tableBody"></tbody>
+    
+              </table>
+              <hr>
+              <span>小贴士:鼠标双击可以修改内容</span>
+            </div>
+          </div>
+        </div>
+      </div>
+        `)
+        $("body").append(item)
+        $('#manageInsert').click(function () {
+          $('#insertionModal').modal('show');
+
+          chrome.storage.local.get(['InsertionEditorType'], function (result) {
+            const insertionEditorType = result.InsertionEditorType || {};
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = ''; // Clear previous content
+            Object.entries(insertionEditorType).forEach(([domain, type]) => {
+              const row = tableBody.insertRow();
+              const cell1 = row.insertCell(0);
+              const cell2 = row.insertCell(1);
+              const cell3 = row.insertCell(2);
+
+              cell1.textContent = domain;
+              cell2.textContent = type;
+              let originalDomain = domain; // 保存原始域名
+
+              // 双击编辑域名
+              cell1.addEventListener('dblclick', function () {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = originalDomain;
+                cell1.innerHTML = '';
+                cell1.appendChild(input);
+                input.focus();
+                input.addEventListener('blur', function () {
+                  const newDomain = input.value.trim();
+                  if (newDomain && newDomain !== originalDomain) {
+                    // 更新域名
+                    insertionEditorType[newDomain] = insertionEditorType[originalDomain];
+                    delete insertionEditorType[originalDomain];
+                    originalDomain = newDomain; // 更新原始域名引用
+                    chrome.storage.local.set({ 'InsertionEditorType': insertionEditorType });
+                    cell1.textContent = newDomain;
+                  } else {
+                    cell1.textContent = originalDomain; // Revert back if empty or unchanged
+                  }
+                });
+              });
+
+              // 双击编辑插入类型
+              cell2.addEventListener('dblclick', function () {
+                const select = document.getElementById('insertTypeOptions').cloneNode(true);
+                select.style.display = 'block';
+                select.value = type;
+                cell2.innerHTML = '';
+                cell2.appendChild(select);
+                select.focus();
+                select.addEventListener('blur', function () {
+                  const newType = select.value;
+                  if (newType && newType !== type) {
+                    insertionEditorType[originalDomain] = newType; // 使用原始域名更新类型
+                    chrome.storage.local.set({ 'InsertionEditorType': insertionEditorType });
+                    cell2.textContent = newType;
+                  } else {
+                    select.remove();
+                    cell2.textContent = type;
+                  }
+                });
+              });
+
+              // 删除按钮
+              const deleteButton = document.createElement('button');
+              deleteButton.classList = 'btn btn-outline-danger';
+              deleteButton.textContent = '删除';
+              deleteButton.onclick = function () {
+                tableBody.removeChild(row);
+                delete insertionEditorType[domain];
+                chrome.storage.local.set({ 'InsertionEditorType': insertionEditorType });
+              };
+              cell3.appendChild(deleteButton);
+            });
+          });
+        })
+      }
+    });
   }
   initializeButtonOption()
-
 
   $("#VERSION").text(chrome.i18n.getMessage("VERSION_1") + ":V" + chrome.runtime.getManifest().version)
   $("#VERSION").click(function () {
@@ -1660,5 +2832,27 @@ $(document).ready(function () {
   animation_button2('.Animation_button2').then(function () {
     overlayElement.remove()
   });
+
+  chrome.storage.sync.get(["BedConfig"], function (result) {
+    if (!result.BedConfig || result.BedConfig.length < 1) return;
+    const newArray = result.BedConfig.map(item => {
+      if (!item.data) {
+        return {
+          id: crypto.randomUUID(),
+          data: item,
+          ConfigName: item.ConfigName || chrome.i18n.getMessage("Config"),
+        };
+      } else {
+        return { ...item, id: crypto.randomUUID() };
+      }
+    });
+    dbHelper("BedConfigStore").then(result => {
+      const { db } = result;
+      db.put(newArray).then(() => {
+        chrome.storage.sync.remove("BedConfig");
+        window.location.reload();
+      });
+    });
+  })
 });
 

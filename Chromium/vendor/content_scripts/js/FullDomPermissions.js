@@ -1,6 +1,6 @@
 // 拥有完整dom权限
 window.addEventListener('message', function (event) {
-    console.log("盘络上传postMessage监听: ", event.data);
+    console.log("postMessage监听: ", event.data);
     if (event.data.type === 'CodeMirror5') {
         let editorElement = document.querySelector(".CodeMirror");
         if (editorElement) {
@@ -97,8 +97,10 @@ window.addEventListener('message', function (event) {
             if (phpbbForum) {
                 let phpbbEditor = document.getElementById("message")
                 phpbbEditor.value += event.data.data;
+                event.source.postMessage({ type: 'phpbbForumResponse', data: true }, event.origin);
             }
         } catch (error) {
+            event.source.postMessage({ type: 'phpbbForumResponse', data: false }, event.origin);
         }
 
     }
@@ -113,6 +115,10 @@ window.addEventListener('message', function (event) {
             .catch(error => {
                 console.error("复制到剪贴板失败：" + error);
             });
+    }
+    //刷新
+    if (event.data.type === 'pageRefresh') {
+        window.location.reload();
     }
 });
 function detectEncoding() {
@@ -136,7 +142,7 @@ function insertImageDiv(element, link, CssName) {
     element.appendChild(imgDiv);
     imgElement.onload = function () {
         imgDiv.className = `position-relative PL-ImgMark`;
-        imgElement.alt = "转换";
+        imgElement.alt = "扩展转换";
         imgElement.title = link;
 
         if (!CssName) {
@@ -155,7 +161,7 @@ function insertImageDiv(element, link, CssName) {
 function FullDomAutoInsert() {
     let item = document.createElement('div');
     item.className = "insertContentIntoEditorPrompt"
-    item.innerText = "😍上传"
+    item.innerText = "😍扩展"
     item.addEventListener('click', function () {
         window.postMessage({ type: 'insertContentIntoEditorPrompt_Click', data: true }, '*');
     });
@@ -299,7 +305,7 @@ function FullDomAutoInsert() {
             }
         }
         if (pageText.toLowerCase().includes("回复") || pageText.toLowerCase().includes("楼主")) {
-            item.innerText = "😭上传"
+            item.innerText = "😭扩展"
         }
     }
     //hostevaluate

@@ -1,6 +1,6 @@
 {
   "name": "__MSG_app_name__",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "manifest_version": 3,
   "description": "__MSG_app_description__",
   "homepage_url": "https://fileup.dev/",
@@ -22,6 +22,7 @@
         "<all_urls>"
       ],
       "js": [
+        "vendor/IndexedDB/db.js",
         "vendor/content_scripts/js/notification.js",
         "vendor/confetti/confetti.js",
         "js/public.js",
@@ -57,9 +58,10 @@
   "permissions": [
     "storage",
     "contextMenus",
-    "notifications"
+    "notifications",
+    "cookies"
   ],
   "host_permissions": [
-    "*://*.bilibili.com/*"
+    "<all_urls>"
   ]
 }

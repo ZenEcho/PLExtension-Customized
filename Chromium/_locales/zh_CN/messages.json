@@ -6,7 +6,7 @@
     "message": "浏览器扩展定制"
   },
   "app_description": {
-    "message": "浏览器扩展定制"
+    "message": "浏览器扩展定制描述"
   },
   "Installing_initialization": {
     "message": "安装初始化..."
@@ -163,6 +163,9 @@
   },
   "SidebarButtonPrompt": {
     "message": "(仅对侧边栏上传有效)"
+  },
+  "Right_click_menu_uploadText": {
+    "message": "右键上传"
   },
   "Right_click_menu_upload": {
     "message": "<i class='bi bi-hand-index'></i> 右键上传"
@@ -627,7 +630,7 @@
     "message": "浏览器扩展定制是可以对着图片右键上传的喔"
   },
   "You_know_what_2": {
-    "message": "盘络还可以拖拽上传"
+    "message": "浏览器扩展定制还可以拖拽上传"
   },
   "You_know_what_3": {
     "message": "粘贴上传,图片转存也不再话下啦!"
@@ -1020,16 +1023,16 @@
     "message": "再努努力吧!"
   },
   "Browse_mode_switch_button_1_attr": {
-    "message": "现在加载的是图床服务器的图片"
+    "message": "现在加载的是在线数据"
   },
   "Browse_mode_switch_button_0_attr": {
-    "message": "现在加载的是本地图片"
+    "message": "现在加载的是本地数据"
   },
   "Browse_mode_switch_button_1": {
-    "message": " 切换到本地"
+    "message": " 切换到本地数据"
   },
   "Browse_mode_switch_button_0": {
-    "message": " 切换到图床"
+    "message": " 切换到在线数据"
   },
   "first": {
     "message": "首页"

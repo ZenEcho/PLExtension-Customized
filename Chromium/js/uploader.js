@@ -81,6 +81,67 @@ function popup_Uploader() {
                 formData.append("permission", ProgramConfigurations.options_permission_select);
             })
             break;
+        case 'EasyImages':
+            uploader.options.url = ProgramConfigurations.options_proxy_server + "https://" + ProgramConfigurations.options_host + "/api/index.php";
+            uploader.options.paramName = 'image';
+            uploader.options.acceptedFiles = 'image/*';
+            uploader.on("sending", function (file, xhr, formData) {
+                formData.append("token", ProgramConfigurations.options_token);
+            })
+            break;
+        case 'ImgURL':
+            uploader.options.url = ProgramConfigurations.options_proxy_server + "https://" + ProgramConfigurations.options_host + "/api/v2/upload";
+            uploader.options.paramName = 'file';
+            uploader.options.acceptedFiles = 'image/*';
+            uploader.on("sending", function (file, xhr, formData) {
+                formData.append("token", ProgramConfigurations.options_token);
+                formData.append("uid", ProgramConfigurations.options_uid);
+            })
+            break;
+        case 'SM_MS':
+            uploader.options.url = ProgramConfigurations.options_proxy_server + "https://" + ProgramConfigurations.options_host + "/api/v2/upload";
+            uploader.options.headers = { "Authorization": ProgramConfigurations.options_token };
+            uploader.options.paramName = 'smfile';
+            uploader.options.acceptedFiles = 'image/*';
+            uploader.on("sending", function (file, xhr, formData) {
+                formData.append("token", ProgramConfigurations.options_token);
+            })
+            break;
+        case 'Chevereto':
+            let Temporary_URL = ""
+            if (ProgramConfigurations.options_expiration_select != "NODEL") {
+                Temporary_URL += "&expiration=" + ProgramConfigurations.options_expiration_select
+            }
+            if (ProgramConfigurations.options_album_id) {
+                Temporary_URL += "&album_id=" + ProgramConfigurations.options_album_id
+            }
+            if (ProgramConfigurations.options_nsfw_select) {
+                Temporary_URL += "&nsfw=" + ProgramConfigurations.options_nsfw_select
+            }
+            uploader.options.url = ProgramConfigurations.options_proxy_server + "https://" + ProgramConfigurations.options_host + "/api/1/upload/?key=" + ProgramConfigurations.options_token + Temporary_URL;
+            uploader.options.headers = { "Authorization": ProgramConfigurations.options_token };
+            uploader.options.paramName = 'source';
+            uploader.options.acceptedFiles = 'image/*';
+            break;
+        case 'Hellohao':
+            uploader.options.url = ProgramConfigurations.options_proxy_server + "https://" + ProgramConfigurations.options_host + "/api/uploadbytoken/";
+            uploader.options.paramName = 'file';
+            uploader.options.acceptedFiles = 'image/*';
+            uploader.on("sending", function (file, xhr, formData) {
+                formData.append("token", ProgramConfigurations.options_token);
+                formData.append("source", ProgramConfigurations.options_source);
+            })
+            break;
+        case 'Imgur':
+            uploader.options.url = ProgramConfigurations.options_proxy_server + "https://" + ProgramConfigurations.options_host + "/3/upload";
+            uploader.options.headers = { "Authorization": 'Client-ID ' + ProgramConfigurations.options_token };
+            if (ProgramConfigurations.options_imgur_post_mode == "video") {
+                uploader.options.acceptedFiles = ".mp4,.webm,.x-matroska,.quicktime,.x-flv,.x-msvideo,.x-ms-wmv,.mpeg"
+            } else {
+                uploader.options.acceptedFiles = 'image/*';
+            }
+            uploader.options.paramName = ProgramConfigurations.options_imgur_post_mode;
+            break;
         case 'UserDiy':
             uploader.options.maxFilesize = 5000
             uploader.options.acceptedFiles = ""
@@ -166,6 +227,477 @@ function popup_Uploader() {
             uploader.on("addedfile", function (file) {
                 delayUpload(file);
             });
+            break;
+        case 'Tencent_COS':
+            // 初始化 COS 对象
+            try {
+                let getAuthorization = function (options, callback) {
+                    let authorization = COS.getAuthorization({
+                        SecretId: ProgramConfigurations.options_SecretId,
+                        SecretKey: ProgramConfigurations.options_SecretKey,
+                        Method: options.Method,
+                        Pathname: options.Pathname,
+                        Query: options.Query,
+                        Headers: options.Headers,
+                        Expires: 900,
+                    });
+                    callback({ Authorization: authorization });
+                };
+                var cos = new COS({
+                    getAuthorization: getAuthorization,
+                    UploadCheckContentMd5: true,
+                    protocol: 'https:' // 强制使用 HTTPS 协议
+                });
+            } catch (error) {
+                toastItem({
+                    toast_content: error
+                });
+            }
+            //腾讯云cos拼接
+            if (!ProgramConfigurations.options_Custom_domain_name) {
+                ProgramConfigurations.options_Custom_domain_name = "https://" + ProgramConfigurations.options_Bucket + ".cos." + ProgramConfigurations.options_Region + ".myqcloud.com/"
+            }
+            uploader.options.autoProcessQueue = false
+            uploader.options.acceptedFiles = ""
+            uploader.options.maxFilesize = 5000 //文件大小
+            delayUpload = async function (file) {
+                if (file.size > uploader.options.maxFilesize * 1024 * 1024) {
+                    return;
+                }
+                let date = new Date();
+                let filename =
+                    ProgramConfigurations.options_UploadPath +
+                    date.getFullYear() +
+                    "/" +
+                    (date.getMonth() + 1) +
+                    "/" +
+                    date.getDate() +
+                    "/" +
+                    file.name;
+
+                await cos.uploadFile({
+                    Bucket: ProgramConfigurations.options_Bucket,
+                    Region: ProgramConfigurations.options_Region,
+                    Key: filename,
+                    Body: file,
+                    onProgress: function (progressData) {
+                        const progress = Math.round((progressData.loaded / progressData.total) * 100);
+                        file.upload.progress = progress;
+                        file.status = Dropzone.UPLOADING;
+                        uploader.emit("uploadprogress", file, progress, 100);
+                    }
+                }, function (err, data) {
+                    if (data) {
+                        file.status = Dropzone.SUCCESS
+                        uploader.emit("success", file, "上传完成");
+                        uploader.emit("complete", file);
+                    }
+                    if (err) {
+                        toastItem({
+                            toast_content: chrome.i18n.getMessage("Upload_prompt4")
+                        })
+                        console.error(err);
+                    }
+                });
+            }
+            // 监听文件添加事件
+            uploader.on("addedfile", function (file) {
+                delayUpload(file);
+                $(".dz-remove").remove()
+            });
+            break;
+        case 'Aliyun_OSS':
+            try {
+                var oss = new OSS({
+                    accessKeyId: ProgramConfigurations.options_SecretId,
+                    accessKeySecret: ProgramConfigurations.options_SecretKey,
+                    bucket: ProgramConfigurations.options_Bucket,
+                    endpoint: ProgramConfigurations.options_Endpoint,
+                    region: ProgramConfigurations.options_Region,
+                    secure: true //强制https
+                });
+            } catch (error) {
+                toastItem({
+                    toast_content: error
+                });
+            }
+            //阿里云oss拼接
+            if (!ProgramConfigurations.options_Custom_domain_name) {
+                ProgramConfigurations.options_Custom_domain_name = "https://" + ProgramConfigurations.options_Bucket + "." + ProgramConfigurations.options_Endpoint + "/"
+            }
+            uploader.options.paramName = "file";
+            uploader.options.autoProcessQueue = false
+            uploader.options.acceptedFiles = ""
+            uploader.options.maxFilesize = 5000
+            delayUpload = async function (file) {
+                if (file.size > uploader.options.maxFilesize * 1024 * 1024) {
+                    return;
+                }
+                let date = new Date();
+                let filename = ProgramConfigurations.options_UploadPath + date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate() + "/" + file.name;
+                const progressCallback = (progress) => {
+                    const percentage = Math.floor(progress * 100);
+                    file.upload.progress = percentage;
+                    file.status = Dropzone.UPLOADING;
+                    uploader.emit("uploadprogress", file, percentage, 100);
+                };
+
+                try {
+                    await oss.multipartUpload(filename, file, { progress: progressCallback });
+                    file.status = Dropzone.SUCCESS;
+                    uploader.emit("success", file, "上传完成");
+                    uploader.emit("complete", file);
+                } catch (error) {
+                    toastItem({
+                        toast_content: chrome.i18n.getMessage("Upload_prompt4"),
+                    });
+                    console.error(error);
+                    return;
+                }
+            }
+            // 监听文件添加事件
+            uploader.on("addedfile", function (file) {
+                delayUpload(file);
+                $(".dz-remove").remove()
+            });
+            break;
+        case 'AWS_S3':
+            //AWS S3区域拼接
+            if (!ProgramConfigurations.options_Endpoint) {
+                ProgramConfigurations.options_Endpoint = "https://s3." + ProgramConfigurations.options_Region + ".amazonaws.com/"
+            }
+            //AWS S3拼接
+            if (!ProgramConfigurations.options_Custom_domain_name) {
+                ProgramConfigurations.options_Custom_domain_name = "https://s3." + ProgramConfigurations.options_Region + ".amazonaws.com/" + ProgramConfigurations.options_Bucket + "/"
+            }
+            try {
+                AWS.config.update({
+                    accessKeyId: ProgramConfigurations.options_SecretId,
+                    secretAccessKey: ProgramConfigurations.options_SecretKey,
+                    region: ProgramConfigurations.options_Region,
+                    endpoint: ProgramConfigurations.options_Endpoint,
+                    signatureVersion: 'v4'
+                });
+                var s3 = new AWS.S3();
+            } catch (error) {
+                toastItem({
+                    toast_content: error
+                });
+            }
+            uploader.options.autoProcessQueue = false
+            uploader.options.acceptedFiles = ""
+            uploader.options.maxFilesize = 5000
+            delayUpload = async function (file) {
+                if (file.size > uploader.options.maxFilesize * 1024 * 1024) {
+                    return;
+                }
+
+                let date = new Date();
+                let filename =
+                    ProgramConfigurations.options_UploadPath +
+                    date.getFullYear() +
+                    "/" +
+                    (date.getMonth() + 1) +
+                    "/" +
+                    date.getDate() +
+                    "/" +
+                    file.name;
+
+                let params;
+                if (ProgramConfigurations.options_Endpoint.includes('amazonaws.com')) {
+                    params = {
+                        Bucket: ProgramConfigurations.options_Bucket,
+                        Key: filename,
+                        Body: file,
+                        ACL: 'public-read',
+                        ContentType: file.type,
+                        Expires: 120,
+                    };
+                } else {
+                    params = {
+                        Bucket: ProgramConfigurations.options_Bucket,
+                        Key: filename,
+                        Body: file,
+                        Expires: 120
+                    };
+                }
+                await s3.upload(params, (err, data) => {
+                    if (err) {
+                        toastItem({
+                            toast_content: chrome.i18n.getMessage("Upload_prompt4")
+                        })
+                        console.error(err);
+                        return;
+                    }
+                    if (data) {
+                        file.status = Dropzone.SUCCESS
+                        uploader.emit("success", file, "上传完成");
+                        uploader.emit("complete", file);
+                    }
+                }).on('httpUploadProgress', function (progress) {
+                    const percentage = Math.floor((progress.loaded / progress.total) * 100);
+                    file.upload.progress = percentage;
+                    file.status = Dropzone.UPLOADING;
+                    uploader.emit("uploadprogress", file, percentage, 100);
+                });
+            }
+            // 监听文件添加事件
+            uploader.on("addedfile", function (file) {
+                delayUpload(file);
+                $(".dz-remove").remove()
+            });
+            break;
+        case 'GitHubUP':
+            uploader.options.autoProcessQueue = false
+            uploader.options.acceptedFiles = ""
+            uploader.options.maxFilesize = 5000
+            delay = measurePingDelay("https://github.com/");
+            delayUpload = async function (file, index) {
+                if (index >= file.length) {
+                    // 所有文件上传完成
+                    return;
+                }
+                const currentFile = file[index];
+                if (currentFile.size > uploader.options.maxFilesize * 1024 * 1024) {
+                    // 跳过文件大小超过限制的文件
+                    await delayUpload(file, index + 1);
+                    return;
+                }
+
+                let date = new Date();
+                let data = { message: 'UploadDate:' + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + date.getHours() + "时" + date.getMinutes() + "分" + date.getSeconds() + "秒" }
+                // 查询是否冲突
+                try {
+                    fetch(ProgramConfigurations.options_proxy_server + `https://api.github.com/repos/` + ProgramConfigurations.options_owner + `/` + ProgramConfigurations.options_repository + `/contents/` + ProgramConfigurations.options_UploadPath + currentFile.name, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + ProgramConfigurations.options_token,
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                        .then(response => response.json())
+                        .then(res => {
+                            if (res.sha) {
+                                data.sha = res.sha
+                            }
+                            Upload_method()
+                        })
+                } catch (error) {
+                    try {
+                        fetch("https://cors-anywhere.pnglog.com/" + `https://api.github.com/repos/` + ProgramConfigurations.options_owner + `/` + ProgramConfigurations.options_repository + `/contents/` + ProgramConfigurations.options_UploadPath + currentFile.name, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': 'Bearer ' + ProgramConfigurations.options_token,
+                                'Content-Type': 'application/json'
+                            },
+                        })
+                            .then(response => response.json())
+                            .then(res => {
+                                if (res.sha) {
+                                    data.sha = res.sha
+                                }
+                                Upload_method()
+                            })
+                    } catch (error) {
+                        console.log(error)
+                        toastItem({
+                            toast_content: chrome.i18n.getMessage("Upload_prompt4")
+                        })
+                    }
+                }
+                async function Upload_method() {
+                    const fileReader = new FileReader();
+                    fileReader.onloadend = function () {
+                        data.content = btoa(fileReader.result)
+                        // 发送上传请求
+                        $.ajax({
+                            url: ProgramConfigurations.options_proxy_server + `https://api.github.com/repos/` + ProgramConfigurations.options_owner + `/` + ProgramConfigurations.options_repository + `/contents/` + ProgramConfigurations.options_UploadPath + currentFile.name,
+                            type: 'PUT',
+                            headers: {
+                                'Authorization': 'Bearer ' + ProgramConfigurations.options_token,
+                                'Content-Type': 'application/json'
+                            },
+                            xhr: function () {
+                                const xhr = new window.XMLHttpRequest();
+                                xhr.upload.addEventListener("progress", function (evt) {
+                                    if (evt.lengthComputable) {
+                                        const percentComplete = Math.floor((evt.loaded / evt.total) * 100);
+                                        currentFile.upload.progress = percentComplete;
+                                        currentFile.status = Dropzone.UPLOADING;
+                                        uploader.emit("uploadprogress", currentFile, percentComplete, 100);
+                                    }
+                                }, false);
+                                return xhr;
+                            },
+                            data: JSON.stringify(data),
+                            success: function (response) {
+                                currentFile.status = Dropzone.SUCCESS;
+                                uploader.emit("success", currentFile, "上传完成");
+                                uploader.emit("complete", currentFile);
+                            },
+                            error: function (xhr, status, error) {
+                                if (xhr) {
+                                    uploader.emit("error", currentFile, xhr);
+                                    return;
+                                }
+                            }
+                        });
+
+                    };
+                    fileReader.readAsBinaryString(currentFile);
+                    // 延迟一段时间后上传下一个文件
+                    await new Promise((resolve) => setTimeout(resolve, delay)); // 设置延迟时间（单位：毫秒）
+                    await delayUpload(file, index + 1);
+                }
+            }
+            // 监听文件添加事件
+            uploader.on("addedfiles", function (files) {
+                // 调用延迟上传函数开始上传
+                delayUpload(files, 0);
+                $(".dz-remove").remove()
+            });
+            break;
+        case 'Telegra_ph':
+            uploader.options.maxFilesize = 5
+            if (ProgramConfigurations.options_Custom_domain_name) {
+                uploader.options.url = ProgramConfigurations.options_proxy_server + ProgramConfigurations.options_Custom_domain_name + "/upload";
+            } else {
+                uploader.options.url = ProgramConfigurations.options_proxy_server + "https://" + ProgramConfigurations.options_host + "/upload";
+            }
+            uploader.options.headers = { "Accept": "application/json" };
+            uploader.options.paramName = 'file';
+            uploader.options.acceptedFiles = '.jpeg,.jpg,.png,.gif,.tif,.bmp,.ico,.psd,.webp';
+            break;
+        case 'imgdd':
+            uploader.options.maxFilesize = 5
+            uploader.options.url = ProgramConfigurations.options_proxy_server + "https://" + ProgramConfigurations.options_host + "/api/v1/upload";
+            uploader.options.headers = { "Accept": "application/json" };
+            uploader.options.paramName = 'image';
+            uploader.options.acceptedFiles = '.jpeg,.jpg,.png,.gif,.bmp,.webp';
+            break;
+        case 'fiftyEight':
+            uploader.options.autoProcessQueue = false
+            uploader.options.maxFilesize = 5
+            uploader.options.url = ProgramConfigurations.options_proxy_server + "https://upload.58cdn.com.cn/json";
+            uploader.options.headers = { "Accept": "application/json" };
+            delayUpload = async function (file) {
+                if (file.size > uploader.options.maxFilesize * 1024 * 1024) {
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    file.dataURL = event.target.result;
+                    // 发送数据到服务器
+                    let dataToSend = {
+                        "Pic-Size": "0*0",
+                        "Pic-Encoding": "base64",
+                        "Pic-Path": "/nowater/webim/big/",
+                        "Pic-Data": file.dataURL.split(",")[1], // 获取Base64编码部分
+                    };
+                    // 执行上传逻辑
+                    $.ajax({
+                        url: "https://upload.58cdn.com.cn/json",
+                        type: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        xhr: function () {
+                            const xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (evt) {
+                                if (evt.lengthComputable) {
+                                    const percentComplete = Math.floor((evt.loaded / evt.total) * 100);
+                                    file.upload.progress = percentComplete;
+                                    file.status = Dropzone.UPLOADING;
+                                    uploader.emit("uploadprogress", file, percentComplete, 100);
+                                }
+                            }, false);
+                            return xhr;
+                        },
+                        data: JSON.stringify(dataToSend),
+                        success: function (result) {
+                            if (result) {
+                                file.status = Dropzone.SUCCESS;
+                                uploader.emit("success", file, result);
+                                uploader.emit("complete", file, result);
+                            } else {
+                                uploader.emit("error", file, "上传失败,可能是达到了上限");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            if (xhr) {
+                                uploader.emit("error", file, xhr);
+                                return;
+                            }
+                        }
+                    });
+                };
+                reader.readAsDataURL(file);
+
+            }
+            // 监听文件添加事件
+            uploader.on("addedfile", function (file) {
+                delayUpload(files);
+                $(".dz-remove").remove()
+            });
+            break;
+        case 'BilibliBed':
+            // uploader.options.url = ProgramConfigurations.options_proxy_server + "http://127.0.0.1:3000/Bed.Bilibli";
+            // uploader.options.headers = {
+            //     "biz": "new_dyn",
+            //     "category": "daily",
+            //     "csrf": options_CSRF,
+            //     "SESSDATA": ProgramConfigurations.options_token
+            // };
+            // uploader.options.acceptedFiles = '.jpeg,.jpg,.png,.gif,.bmp,.ico,.webp';
+
+            // uploader.options.url = "https://api.bilibili.com/x/dynamic/feed/draw/upload_bfs";
+            // uploader.options.paramName = 'file_up';
+            // uploader.options.acceptedFiles = '.jpeg,.jpg,.png,.gif,.bmp,.ico,.webp';
+            // uploader.on("sending", function (file, xhr, formData) {
+            //     formData.append("biz", "new_dyn");
+            //     formData.append("category", "category");
+            // })
+            break;
+        case 'BaiJiaHaoBed':
+            uploader.options.url = ProgramConfigurations.options_proxy_server + "https://baijiahao.baidu.com/pcui/picture/upload";
+            uploader.options.paramName = 'media';
+            uploader.options.acceptedFiles = '.jpeg,.jpg,.png,.gif,.bmp,.ico,.webp';
+            uploader.on("sending", function (file, xhr, formData) {
+                formData.append("type", "image");
+            })
+            break;
+        case 'freebufBed':
+            uploader.options.url = ProgramConfigurations.options_proxy_server + "https://www.freebuf.com/fapi/frontend/upload/image";
+            uploader.options.paramName = 'file';
+            uploader.options.acceptedFiles = '.jpeg,.jpg,.png,.gif,.bmp,.ico,.webp';
+            uploader.options.headers = {
+                "Accept": "application/json, text/plain, */*",
+                "Referer": "https://www.freebuf.com/write",
+                "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+            };
+            break;
+        case 'toutiaoBed':
+            const randomAid = Math.floor(Math.random() * 24) + 1;
+            let url = `https://i.snssdk.com/feedback/image/v1/upload/?appkey=toutiao_web-web&aid=` + randomAid + `&app_name=toutiao_web`
+            uploader.options.url = ProgramConfigurations.options_proxy_server + url;
+            uploader.options.paramName = 'image';
+            uploader.options.acceptedFiles = '.jpeg,.jpg,.png,.gif,.bmp,.ico,.webp';
+            uploader.options.headers = {
+                "Accept": "application/json, text/plain, */*",
+                "Referer": "https://helpdesk.bytedance.com/",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.31"
+            };
+            uploader.on("sending", function (file, xhr, formData) {
+                formData.append("app_id", randomAid);
+            })
+            break;
+        case 'toutiaoBed2':
+            // uploader.options.url = ProgramConfigurations.options_proxy_server + "https://mp.toutiao.com/spice/image?upload_source=20020002&aid=1231&device_platform=web";
+            // uploader.options.paramName = 'image';
+            // uploader.options.acceptedFiles = '.jpeg,.jpg,.png,.gif,.bmp,.ico,.webp';
+            // uploader.options.headers = {
+            //     "Accept": "application/json, text/plain, */*",
+            // }
             break;
     }
 }
@@ -319,6 +851,11 @@ function content_scripts_HandleUploadWithMode(imgUrl, MethodName, callback, Simu
             //处理拖拽上传的方法
             const uploadFunctions = {
                 UserDiy: custom_uploadFile,
+                Tencent_COS: Cos_uploadFile,
+                Aliyun_OSS: Oos_uploadFile,
+                AWS_S3: S3_uploadFile,
+                GitHubUP: GitHub_uploadFile,
+                fiftyEight: fiftyEight_uploadFile
             };
             if (ProgramConfigurations.options_exe in uploadFunctions) {
                 uploadFunctions[ProgramConfigurations.options_exe](imgUrl);
@@ -347,7 +884,29 @@ function content_scripts_HandleUploadWithMode(imgUrl, MethodName, callback, Simu
                 if (ProgramConfigurations.options_exe == "UserDiy") {
                     custom_uploadFile(blob, imgUrl)
                 }
-              
+                if (ProgramConfigurations.options_exe == "Tencent_COS") {
+                    Cos_uploadFile(blob, imgUrl)
+                }
+                if (ProgramConfigurations.options_exe == "Aliyun_OSS") {
+                    Oos_uploadFile(blob, imgUrl)
+                }
+                if (ProgramConfigurations.options_exe == "AWS_S3") {
+                    S3_uploadFile(blob, imgUrl)
+                }
+                if (ProgramConfigurations.options_exe == "GitHubUP") {
+                    let reader = new FileReader();
+                    reader.onload = function () {
+                        GitHub_uploadFile(btoa(reader.result), blob, imgUrl);
+                    };
+                    reader.readAsBinaryString(blob, null, imgUrl);
+                }
+                if (ProgramConfigurations.options_exe == "fiftyEight") {
+                    let reader = new FileReader();
+                    reader.onload = function () {
+                        fiftyEight_uploadFile(btoa(reader.result), blob, imgUrl);
+                    };
+                    reader.readAsBinaryString(blob, null, imgUrl);
+                }
             }
         }
 
@@ -358,7 +917,7 @@ function content_scripts_HandleUploadWithMode(imgUrl, MethodName, callback, Simu
                 if (ProgramConfigurations.Keyword_replacement1.length != ProgramConfigurations.Keyword_replacement2.length) {
                     alert("关键词和替换词的数量不一致");
                     PLNotification({
-                        title: "盘络上传：",
+                        title: chrome.i18n.getMessage("app_name"),
                         type: "error",
                         content: `关键词和替换词的数量不一致!`,
                         duration: 0,
@@ -375,7 +934,7 @@ function content_scripts_HandleUploadWithMode(imgUrl, MethodName, callback, Simu
                 } catch (error) {
                     alert(chrome.i18n.getMessage("Headers_error"));
                     PLNotification({
-                        title: "盘络上传：",
+                        title: chrome.i18n.getMessage("app_name"),
                         type: "error",
                         content: chrome.i18n.getMessage("Headers_error"),
                         duration: 0,
@@ -393,7 +952,7 @@ function content_scripts_HandleUploadWithMode(imgUrl, MethodName, callback, Simu
                     console.log(error);
                     alert(chrome.i18n.getMessage("Body_error"));
                     PLNotification({
-                        title: "盘络上传：",
+                        title: chrome.i18n.getMessage("app_name"),
                         type: "error",
                         content: chrome.i18n.getMessage("Body_error"),
                         duration: 0,
@@ -497,6 +1056,329 @@ function content_scripts_HandleUploadWithMode(imgUrl, MethodName, callback, Simu
                     })
             }
         }
+        function Cos_uploadFile(blob, imgUrl) {
+            // 初始化 COS 对象
+            try {
+                let getAuthorization = function (options, callback) {
+                    let authorization = COS.getAuthorization({
+                        SecretId: ProgramConfigurations.options_SecretId,
+                        SecretKey: ProgramConfigurations.options_SecretKey,
+                        Method: options.Method,
+                        Pathname: options.Pathname,
+                        Query: options.Query,
+                        Headers: options.Headers,
+                        Expires: 900,
+                    });
+                    callback({ Authorization: authorization });
+                };
+                var cos = new COS({
+                    getAuthorization: getAuthorization,
+                    UploadCheckContentMd5: true,
+                    protocol: 'https:' // 强制使用 HTTPS 协议
+                });
+            } catch (error) {
+                toastItem({
+                    toast_content: error
+                });
+            }
+            //腾讯云cos拼接
+            if (!ProgramConfigurations.options_Custom_domain_name) {
+                ProgramConfigurations.options_Custom_domain_name = "https://" + ProgramConfigurations.options_Bucket + ".cos." + ProgramConfigurations.options_Region + ".myqcloud.com/"
+            }
+            let date = new Date();
+            let getMonth = date.getMonth() + 1 //月
+            const imageExtension = getImageFileExtension(imgUrl, blob)
+            let UrlImgNema = ProgramConfigurations.options_exe + `_` + MethodName + `_` + (Math.floor(date.getTime() / 1000)) + "." + imageExtension;
+            let filename = ProgramConfigurations.options_UploadPath + date.getFullYear() + "/" + getMonth + "/" + date.getDate() + "/" + UrlImgNema;
+            chrome.runtime.sendMessage({ "Progress_bar": { "filename": filename, "status": 1 } });
+            const file = new File([blob], UrlImgNema, { type: 'image/' + imageExtension });//将获取到的图片数据(blob)导入到file中
+            cos.uploadFile({
+                Bucket: ProgramConfigurations.options_Bucket,
+                Region: ProgramConfigurations.options_Region,
+                Key: filename,
+                Body: file,
+            }, async function (err, data) {
+                if (data) {
+                    callback(data, null);
+                    imageUrl = ProgramConfigurations.options_Custom_domain_name + filename
+                    ProgramConfigurations.options_host = ProgramConfigurations.options_Bucket
+                    chrome.storage.local.get(["FuncDomain"], function (result) {
+                        if (result.FuncDomain.AutoCopy == "on") {
+                            window.postMessage({ type: 'AutoCopy', data: imageUrl }, '*');
+                        }
+                    });
+                    LocalStorage({
+                        "file": {
+                            "name": filename,
+                            "file": file,
+                        },
+                        "url": imageUrl,
+                        "MethodName": MethodName,
+                    })
+                }
+                if (err) {
+                    console.error(err);
+                    callback(null, new Error(chrome.i18n.getMessage("Upload_prompt3")));
+                    chrome.runtime.sendMessage({ Loudspeaker: chrome.i18n.getMessage("Upload_prompt4") });
+                    chrome.runtime.sendMessage({ "Progress_bar": { "filename": filename, "status": 0 } });
+                }
+            });
+        }
+        function Oos_uploadFile(blob, imgUrl) {
+            try {
+                var oss = new OSS({
+                    accessKeyId: ProgramConfigurations.options_SecretId,
+                    accessKeySecret: ProgramConfigurations.options_SecretKey,
+                    bucket: ProgramConfigurations.options_Bucket,
+                    endpoint: ProgramConfigurations.options_Endpoint,
+                    region: ProgramConfigurations.options_Region,
+                    secure: true //强制https
+                });
+            } catch (error) {
+                toastItem({
+                    toast_content: error
+                });
+            }
+            //阿里云oss拼接
+            if (!ProgramConfigurations.options_Custom_domain_name) {
+                ProgramConfigurations.options_Custom_domain_name = "https://" + ProgramConfigurations.options_Bucket + "." + ProgramConfigurations.options_Endpoint + "/"
+            }
+
+            let date = new Date();
+            let getMonth = date.getMonth() + 1 //月
+            const imageExtension = getImageFileExtension(imgUrl, blob)
+            let UrlImgNema = ProgramConfigurations.options_exe + `_` + MethodName + `_` + (Math.floor(date.getTime() / 1000)) + "." + imageExtension;
+            let filename = ProgramConfigurations.options_UploadPath + date.getFullYear() + "/" + getMonth + "/" + date.getDate() + "/" + UrlImgNema;
+            chrome.runtime.sendMessage({ "Progress_bar": { "filename": filename, "status": 1 } });
+            const file = new File([blob], UrlImgNema, { type: 'image/' + imageExtension });//将获取到的图片数据(blob)导入到file中
+            oss.put(filename, file, {
+                headers: {
+                    'Content-Type': 'image/png'
+                }
+            }).then((result) => {
+                callback(result, null);
+                imageUrl = ProgramConfigurations.options_Custom_domain_name + filename
+                ProgramConfigurations.options_host = ProgramConfigurations.options_Endpoint
+                chrome.storage.local.get(["FuncDomain"], function (result) {
+                    if (result.FuncDomain.AutoCopy == "on") {
+                        window.postMessage({ type: 'AutoCopy', data: imageUrl }, '*');
+                    }
+                });
+                LocalStorage({
+                    "file": {
+                        "name": filename,
+                        "file": file,
+                    },
+                    "url": imageUrl,
+                    "MethodName": MethodName,
+                })
+            }).catch((err) => {
+                console.error(err);
+                callback(null, new Error(chrome.i18n.getMessage("Upload_prompt3")));
+                chrome.runtime.sendMessage({ Loudspeaker: chrome.i18n.getMessage("Upload_prompt4") });
+                chrome.runtime.sendMessage({ "Progress_bar": { "filename": filename, "status": 0 } });
+            });
+        }
+        function S3_uploadFile(blob, imgUrl) {
+            //AWS S3区域拼接
+            if (!ProgramConfigurations.options_Endpoint) {
+                ProgramConfigurations.options_Endpoint = "https://s3." + ProgramConfigurations.options_Region + ".amazonaws.com/"
+            }
+            //AWS S3拼接
+            if (!ProgramConfigurations.options_Custom_domain_name) {
+                ProgramConfigurations.options_Custom_domain_name = "https://s3." + ProgramConfigurations.options_Region + ".amazonaws.com/" + ProgramConfigurations.options_Bucket + "/"
+            }
+            try {
+                AWS.config.update({
+                    accessKeyId: ProgramConfigurations.options_SecretId,
+                    secretAccessKey: ProgramConfigurations.options_SecretKey,
+                    region: ProgramConfigurations.options_Region,
+                    endpoint: ProgramConfigurations.options_Endpoint,
+                    signatureVersion: 'v4'
+                });
+                var s3 = new AWS.S3();
+            } catch (error) {
+                toastItem({
+                    toast_content: error
+                });
+            }
+            let date = new Date();
+            let getMonth = date.getMonth() + 1 //月
+            const imageExtension = getImageFileExtension(imgUrl, blob)
+            let UrlImgNema = ProgramConfigurations.options_exe + `_` + MethodName + `_` + (Math.floor(date.getTime() / 1000)) + "." + imageExtension;
+            let filename = ProgramConfigurations.options_UploadPath + date.getFullYear() + "/" + getMonth + "/" + date.getDate() + "/" + UrlImgNema;
+            chrome.runtime.sendMessage({ "Progress_bar": { "filename": filename, "status": 1 } });
+            const file = new File([blob], UrlImgNema, { type: 'image/' + imageExtension });//将获取到的图片数据(blob)导入到file中
+            let params;
+            if (ProgramConfigurations.options_Endpoint.includes('amazonaws.com')) {
+                params = {
+                    Bucket: ProgramConfigurations.options_Bucket,
+                    Key: filename,
+                    Body: file,
+                    ACL: 'public-read',
+                    ContentType: file.type,
+                    Expires: 120,
+                };
+            } else {
+                params = {
+                    Bucket: ProgramConfigurations.options_Bucket,
+                    Key: filename,
+                    Body: file,
+                    Expires: 120
+                };
+            }
+            s3.upload(params, function (err, data) {
+                if (err) {
+                    callback(null, new Error(chrome.i18n.getMessage("Upload_prompt3")));
+                    console.error(err);
+                    chrome.runtime.sendMessage({ Loudspeaker: chrome.i18n.getMessage("Upload_prompt4") });
+                    chrome.runtime.sendMessage({ "Progress_bar": { "filename": filename, "status": 0 } });
+                    return;
+                }
+                callback(data, null);
+                imageUrl = ProgramConfigurations.options_Custom_domain_name + filename;
+                ProgramConfigurations.options_host = ProgramConfigurations.options_Endpoint;
+                chrome.storage.local.get(["FuncDomain"], function (result) {
+                    if (result.FuncDomain.AutoCopy == "on") {
+                        window.postMessage({ type: 'AutoCopy', data: imageUrl }, '*');
+                    }
+                });
+                LocalStorage({
+                    "file": {
+                        "name": filename,
+                        "file": file,
+                    },
+                    "url": imageUrl,
+                    "MethodName": MethodName,
+                })
+            })
+
+        }
+        function GitHub_uploadFile(btoa, files, imgUrl) {
+            const file = files || btoa.file
+
+            const blob = btoa.btoa
+            let date = new Date();
+            const imageExtension = getImageFileExtension(imgUrl, file)
+            let UrlImgNema = ProgramConfigurations.options_exe + `_` + MethodName + `_` + (Math.floor(date.getTime() / 1000)) + "." + imageExtension;
+            chrome.runtime.sendMessage({ "Progress_bar": { "filename": UrlImgNema, "status": 1 } });
+            // 查询是否冲突
+            let data = { message: 'UploadDate:' + date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日" + date.getHours() + "时" + date.getMinutes() + "分" + date.getSeconds() + "秒" }
+            data.content = blob
+            function fetchContent(url) {
+                return fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + ProgramConfigurations.options_token,
+                        'Content-Type': 'application/json'
+                    },
+                })
+                    .then(response => response.json())
+                    .then(res => {
+                        if (res.sha) {
+                            data.sha = res.sha;
+                        }
+                        Upload_method();
+                    });
+            }
+
+            fetchContent(ProgramConfigurations.options_proxy_server + `https://api.github.com/repos/` + ProgramConfigurations.options_owner + `/` + ProgramConfigurations.options_repository + `/contents/` + ProgramConfigurations.options_UploadPath + UrlImgNema)
+                .catch(() => {
+                    return fetchContent("https://cors-anywhere.pnglog.com/" + `https://api.github.com/repos/` + ProgramConfigurations.options_owner + `/` + ProgramConfigurations.options_repository + `/contents/` + ProgramConfigurations.options_UploadPath + UrlImgNema);
+                })
+                .catch(error => {
+                    console.log(error);
+                    chrome.runtime.sendMessage({ Loudspeaker: chrome.i18n.getMessage("Upload_prompt4") });
+                    chrome.runtime.sendMessage({ "Progress_bar": { "filename": UrlImgNema, "status": 0 } });
+                });
+
+            function Upload_method() {
+                fetch(ProgramConfigurations.options_proxy_server + `https://api.github.com/repos/` + ProgramConfigurations.options_owner + `/` + ProgramConfigurations.options_repository + `/contents/` + ProgramConfigurations.options_UploadPath + UrlImgNema, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'Bearer ' + ProgramConfigurations.options_token,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data),
+                })
+                    .then(response => response.json())
+                    .then(res => {
+                        console.log(res)
+                        callback(res, null);
+                        imageUrl = `https://raw.githubusercontent.com/` + ProgramConfigurations.options_owner + `/` + ProgramConfigurations.options_repository + `/main/` + ProgramConfigurations.options_UploadPath + UrlImgNema
+                        chrome.storage.local.get(["FuncDomain"], function (result) {
+                            if (result.FuncDomain.AutoCopy == "on") {
+                                window.postMessage({ type: 'AutoCopy', data: imageUrl }, '*');
+                            }
+                        });
+                        LocalStorage({
+                            "file": {
+                                "name": UrlImgNema,
+                                "file": file,
+                            },
+                            "url": imageUrl,
+                            "MethodName": MethodName,
+                        })
+                    }).catch(error => {
+                        console.log(error)
+                        callback(null, new Error(chrome.i18n.getMessage("Upload_prompt3")));
+                        chrome.runtime.sendMessage({ Loudspeaker: chrome.i18n.getMessage("Upload_prompt4") });
+                        chrome.runtime.sendMessage({ "Progress_bar": { "filename": UrlImgNema, "status": 0 } });
+                        return;
+                    })
+            }
+
+        }
+        function fiftyEight_uploadFile(btoa, files, imgUrl) {
+            const file = files || btoa.file
+            const blob = btoa.btoa
+
+            let date = new Date();
+            const imageExtension = getImageFileExtension(imgUrl, file)
+            let UrlImgNema = ProgramConfigurations.options_exe + `_` + MethodName + `_` + (Math.floor(date.getTime() / 1000)) + "." + imageExtension;
+            chrome.runtime.sendMessage({ "Progress_bar": { "filename": UrlImgNema, "status": 1 } });
+            let dataToSend = {
+                "Pic-Size": "0*0",
+                "Pic-Encoding": "base64",
+                "Pic-Path": "/nowater/webim/big/",
+                "Pic-Data": blob, // 获取Base64编码部分
+            };
+            fetch(ProgramConfigurations.options_proxy_server + `https://upload.58cdn.com.cn/json`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataToSend),
+            })
+                .then(response => response.text())
+                .then(res => {
+                    if (res && res.indexOf("n_v2") > -1) {
+                        UrlImgNema = res
+                        let index = parseInt(Math.random() * 8) + 1;
+                        imageUrl = "https://pic" + index + ".58cdn.com.cn/nowater/webim/big/" + res;
+                        callback(res, null);
+                        chrome.storage.local.get(["FuncDomain"], function (result) {
+                            if (result.FuncDomain.AutoCopy == "on") {
+                                window.postMessage({ type: 'AutoCopy', data: imageUrl }, '*');
+                            }
+                        });
+                        LocalStorage({
+                            "file": {
+                                "name": UrlImgNema,
+                                "file": file,
+                            },
+                            "url": imageUrl,
+                            "MethodName": MethodName,
+                        })
+                    }
+                }).catch(error => {
+                    console.log(error)
+                    callback(null, new Error(chrome.i18n.getMessage("Upload_prompt3")));
+                    chrome.runtime.sendMessage({ Loudspeaker: chrome.i18n.getMessage("Upload_prompt4") });
+                    chrome.runtime.sendMessage({ "Progress_bar": { "filename": UrlImgNema, "status": 0 } });
+                    return;
+                })
+        }
     })
 }
 /**
@@ -551,6 +1433,7 @@ function LocalStorage(data) {
 
     let pluginPopup = chrome.runtime.getURL("popup.html");
     let currentURL = window.location.href;
+
     return new Promise((resolveC, rejectC) => {
         let filename = data.file.name || data.file.file.name;
         let imageUrl = data.url
@@ -564,48 +1447,28 @@ function LocalStorage(data) {
             if (!Array.isArray(UploadLog)) {
                 UploadLog = [];
             }
-            function generateRandomKey() {
-                return new Promise(resolve => {
-                    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-                    let key = '';
-                    for (let i = 0; i < 6; i++) {
-                        key += characters.charAt(Math.floor(Math.random() * characters.length));
-                    }
-                    // 确保不会重复
-                    while (UploadLog.some(log => log.id === key)) {
-                        key = '';
-                        for (let i = 0; i < 6; i++) {
-                            key += characters.charAt(Math.floor(Math.random() * characters.length));
-                        }
-                    }
-                    resolve(key);
-                });
+            let d = new Date();
+            let UploadLogData = {
+                key: crypto.randomUUID(),
+                url: imageUrl,
+                uploadExe: ProgramConfigurations.options_exe + "-" + MethodName,
+                upload_domain_name: uploadDomainName,
+                original_file_name: filename,
+                file_size: data.file.file.size,
+                img_file_size: "宽:不支持,高:不支持",
+                uploadTime: d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日" + d.getHours() + "时" + d.getMinutes() + "分" + d.getSeconds() + "秒"
             }
-            generateRandomKey().then(key => {
-                let d = new Date();
-                let UploadLogData = {
-                    key: key,
-                    url: imageUrl,
-                    uploadExe: ProgramConfigurations.options_exe + "-" + MethodName,
-                    upload_domain_name: uploadDomainName,
-                    original_file_name: filename,
-                    file_size: data.file.file.size,
-                    img_file_size: "宽:不支持,高:不支持",
-                    uploadTime: d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate() + "日" + d.getHours() + "时" + d.getMinutes() + "分" + d.getSeconds() + "秒"
+            if (typeof UploadLog !== 'object') {
+                UploadLog = JSON.parse(UploadLog);
+            }
+            UploadLog.push(UploadLogData);
+            chrome.storage.local.set({ 'UploadLog': UploadLog }, function () {
+                if (window.location.href.startsWith('http')) {
+                    chrome.runtime.sendMessage({ Loudspeaker: chrome.i18n.getMessage("Upload_prompt2") });
+                    AutoInsertFun(imageUrl, false)
                 }
-                if (typeof UploadLog !== 'object') {
-                    UploadLog = JSON.parse(UploadLog);
-                }
-                UploadLog.push(UploadLogData);
-                chrome.storage.local.set({ 'UploadLog': UploadLog }, function () {
-                    if (window.location.href.startsWith('http')) {
-                        chrome.runtime.sendMessage({ Loudspeaker: chrome.i18n.getMessage("Upload_prompt2") });
-                        AutoInsertFun(imageUrl, false)
-                    }
-                    resolveC(true);
-                })
-            });
+                resolveC(true);
+            })
         });
     });
-
 }
